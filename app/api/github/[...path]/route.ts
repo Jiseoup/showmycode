@@ -6,9 +6,10 @@ const PAT  = process.env.GITHUB_PAT!;
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { path: string[] } }
+  { params }: { params: Promise<{ path: string[] }> }
 ) {
-  const ghPath = params.path.join("/");
+  const { path } = await params;
+  const ghPath = path.join("/");
 
   // repos/{owner}/{repo}/... 형태에서 owner, repo 추출 후 허용 목록 검사
   const match = ghPath.match(/^repos\/([^/]+)\/([^/]+)/);
