@@ -57,6 +57,7 @@ export type GhRepo = {
   stargazers_count: number;
   language: string | null;
   updated_at: string;
+  topics: string[];
 };
 
 export type GhTreeItem = {

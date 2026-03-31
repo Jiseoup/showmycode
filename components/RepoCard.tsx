@@ -53,6 +53,20 @@ export function RepoCard({
             </p>
           )}
 
+          {/* 토픽 태그 */}
+          {repo.topics.length > 0 && (
+            <div className="flex items-center gap-1.5 mt-2 flex-wrap">
+              {repo.topics.map((topic) => (
+                <span
+                  key={topic}
+                  className="text-xs bg-blue-500/10 text-blue-600 dark:text-blue-400 rounded-full px-2.5 py-0.5"
+                >
+                  {topic}
+                </span>
+              ))}
+            </div>
+          )}
+
           {/* 메타 정보 */}
           <div className="flex items-center gap-4 mt-3 text-xs text-muted-foreground flex-wrap">
             {langColor && repo.language && (
