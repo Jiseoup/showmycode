@@ -24,9 +24,22 @@ Copy `.env.example` to `.env.local` and fill in:
 - `GITHUB_OWNER` — GitHub username/org
 - `GITHUB_REPOS` — Comma-separated repository names to expose
 
+## Project Philosophy
+
+This is an **open-source project** that accepts external contributions. All implementation decisions must follow open-source best practices:
+
+- **Branch strategy** — GitHub Flow. Work on feature branches (`feat/`, `fix/`, `chore/`, `refactor/`) and merge via PR to `main`.
+- **Commit messages** — Conventional Commits (`feat:`, `fix:`, `chore:`, `refactor:`, `docs:`, `test:`).
+- **PR discipline** — Squash and merge. Every PR must pass CI (build + lint + test) and receive at least one review.
+- **Code quality** — No PR without passing checks. Add tests for new features when a test framework is in place.
+- **Documentation** — User-facing changes should update relevant docs. Keep CONTRIBUTING.md and Issue/PR templates current.
+- **i18n** — All user-facing strings must support KO/EN. Never hardcode display text.
+
+The goal of showmycode is to let **anyone** securely share private GitHub repositories with specific people (e.g. interviewers, collaborators) without exposing credentials. It is not just a personal portfolio tool — it is a general-purpose solution for controlled code sharing.
+
 ## Architecture
 
-**showmycode** is a Next.js 16 App Router application that serves as a secure portfolio viewer for GitHub repositories — allowing users to share private code with interviewers without exposing credentials.
+**showmycode** is a Next.js 16 App Router application that lets users share private GitHub repositories securely — without exposing credentials to viewers.
 
 ### Routing
 

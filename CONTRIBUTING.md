@@ -1,0 +1,94 @@
+# Contributing to showmycode
+
+Thank you for your interest in contributing to showmycode! This guide will help you get started.
+
+## Getting Started
+
+1. **Fork** the repository
+2. **Clone** your fork:
+   ```bash
+   git clone https://github.com/<your-username>/showmycode.git
+   cd showmycode
+   ```
+3. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+4. **Set up environment variables:**
+   ```bash
+   cp .env.example .env.local
+   ```
+   Fill in `GITHUB_PAT`, `GITHUB_OWNER`, and `GITHUB_REPOS` as described in the README.
+5. **Run the dev server:**
+   ```bash
+   npm run dev
+   ```
+
+## Branch Naming
+
+Create a branch from `main` using the following prefixes:
+
+| Prefix | Purpose | Example |
+|--------|---------|---------|
+| `feat/` | New feature | `feat/repo-search` |
+| `fix/` | Bug fix | `fix/dark-mode-flash` |
+| `chore/` | Config, dependencies, CI | `chore/upgrade-next` |
+| `refactor/` | Code restructuring | `refactor/github-api` |
+| `docs/` | Documentation only | `docs/setup-guide` |
+| `test/` | Adding or updating tests | `test/api-route` |
+
+## Commit Messages
+
+We follow [Conventional Commits](https://www.conventionalcommits.org/):
+
+```
+feat: add repository search to home page
+fix: resolve syntax highlighting in dark mode
+docs: update setup instructions for GitHub PAT
+```
+
+- Use the **imperative mood** ("add", not "added")
+- Keep the subject line under 72 characters
+- Add a body for non-trivial changes explaining **why**
+
+## Pull Requests
+
+1. Ensure your branch is up to date with `main`
+2. Run checks locally before pushing:
+   ```bash
+   npm run build && npm run lint
+   ```
+3. Open a PR against `main` and fill in the PR template
+4. PRs are merged via **squash and merge**
+
+### What makes a good PR
+
+- **Small and focused** — one concern per PR
+- **Descriptive title** — follows Conventional Commits format
+- **Filled-in template** — explains what changed and how to verify
+- **Passing CI** — build and lint must pass
+
+## Internationalization (i18n)
+
+All user-facing strings must support both **Korean (KO)** and **English (EN)**. When adding or modifying UI text:
+
+1. Add the string to both `dictionaries/ko.json` and `dictionaries/en.json`
+2. Access it via the dictionary passed through server components
+3. Never hardcode display text in components
+
+## Code Style
+
+- **TypeScript** — all code must be typed; avoid `any`
+- **Server Components by default** — only use `"use client"` when interactivity is required
+- **Tailwind CSS** — use utility classes; avoid inline styles
+- Follow existing patterns in the codebase
+
+## Reporting Issues
+
+- Use the appropriate [issue template](https://github.com/showmycode/showmycode/issues/new/choose)
+- Search existing issues before opening a new one
+- Include reproduction steps for bugs
+
+## Code of Conduct
+
+By participating in this project, you agree to abide by our [Code of Conduct](CODE_OF_CONDUCT.md). Be kind and respectful.
