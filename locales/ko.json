@@ -1,0 +1,33 @@
+{
+  "nav": {
+    "code": "코드",
+    "commits": "커밋",
+    "pulls": "PR"
+  },
+  "repo": {
+    "private": "Private",
+    "public": "Public",
+    "noDescription": "설명 없음",
+    "updated": "업데이트"
+  },
+  "code": {
+    "files": "파일",
+    "selectFile": "왼쪽에서 파일을 선택하세요"
+  },
+  "commits": {
+    "title": "커밋 히스토리",
+    "countSuffix": "개"
+  },
+  "pulls": {
+    "title": "Pull Requests",
+    "countSuffix": "개",
+    "empty": "PR이 없습니다.",
+    "merged": "Merged",
+    "open": "Open",
+    "closed": "Closed"
+  },
+  "error": {
+    "title": "데이터를 불러오지 못했습니다.",
+    "retry": "다시 시도"
+  }
+}

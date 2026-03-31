@@ -1,0 +1,33 @@
+{
+  "nav": {
+    "code": "Code",
+    "commits": "Commits",
+    "pulls": "Pull Requests"
+  },
+  "repo": {
+    "private": "Private",
+    "public": "Public",
+    "noDescription": "No description",
+    "updated": "Updated"
+  },
+  "code": {
+    "files": "Files",
+    "selectFile": "Select a file from the left"
+  },
+  "commits": {
+    "title": "Commit History",
+    "countSuffix": ""
+  },
+  "pulls": {
+    "title": "Pull Requests",
+    "countSuffix": "",
+    "empty": "No pull requests.",
+    "merged": "Merged",
+    "open": "Open",
+    "closed": "Closed"
+  },
+  "error": {
+    "title": "Failed to load data.",
+    "retry": "Try again"
+  }
+}
