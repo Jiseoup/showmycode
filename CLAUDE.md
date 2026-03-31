@@ -28,8 +28,8 @@ Copy `.env.example` to `.env.local` and fill in:
 
 This is an **open-source project** that accepts external contributions. All implementation decisions must follow open-source best practices:
 
-- **Branch strategy** — GitHub Flow. Work on feature branches (`feat/`, `fix/`, `chore/`, `refactor/`) and merge via PR to `main`.
-- **Commit messages** — Conventional Commits (`feat:`, `fix:`, `chore:`, `refactor:`, `docs:`, `test:`).
+- **Branch strategy** — GitHub Flow. Work on feature branches (`feat/`, `fix/`, `chore/`, `refactor/`, `docs/`, `test/`, `i18n/`) and merge via PR to `main`.
+- **Commit messages** — Conventional Commits (`feat:`, `fix:`, `chore:`, `refactor:`, `docs:`, `test:`, `i18n:`).
 - **PR discipline** — Squash and merge. Every PR must pass CI (build + lint + test) and receive at least one review.
 - **Code quality** — No PR without passing checks. Add tests for new features when a test framework is in place.
 - **Documentation** — User-facing changes should update relevant docs. Keep CONTRIBUTING.md and Issue/PR templates current.

@@ -36,6 +36,7 @@ Create a branch from `main` using the following prefixes:
 | `refactor/` | Code restructuring | `refactor/github-api` |
 | `docs/` | Documentation only | `docs/setup-guide` |
 | `test/` | Adding or updating tests | `test/api-route` |
+| `i18n/` | Internationalization (translations, locale) | `i18n/add-ja-locale` |
 
 ## Commit Messages
 
@@ -45,6 +46,7 @@ We follow [Conventional Commits](https://www.conventionalcommits.org/):
 feat: add repository search to home page
 fix: resolve syntax highlighting in dark mode
 docs: update setup instructions for GitHub PAT
+i18n: add Japanese locale support
 ```
 
 - Use the **imperative mood** ("add", not "added")
