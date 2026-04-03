@@ -43,7 +43,7 @@ The goal of showmycode is to let **anyone** securely share private GitHub reposi
 
 ### Routing
 
-All pages are under `app/[lang]/` for internationalization (KO/EN). The proxy (Next.js 16 middleware) in `proxy.ts` detects `Accept-Language` and redirects to the appropriate locale.
+All pages are under `app/[lang]/` for internationalization (KO/EN). `proxy.ts` (Next.js 16's replacement for `middleware.ts`, runs on Node.js runtime) handles auth token validation and locale detection.
 
 ```
 /[lang]/                                              → Repository listing
@@ -53,6 +53,16 @@ All pages are under `app/[lang]/` for internationalization (KO/EN). The proxy (N
 /[lang]/repository/[owner]/[repo]/pulls/             → Pull request list (paginated, 30/page)
 /[lang]/repository/[owner]/[repo]/pulls/[number]     → PR detail (Overview / Commits / Files changed tabs)
 ```
+
+### Access Control
+
+All pages are protected by a share token set in `SHARE_TOKEN` env var. The flow:
+
+1. First visit: append `?token=<SHARE_TOKEN>` to any URL → middleware validates, sets a 30-day `httpOnly` cookie, redirects without the token in the URL.
+2. Subsequent visits: cookie is checked automatically.
+3. Invalid/missing token → redirected to `/unauthorized` (token entry page).
+
+If `SHARE_TOKEN` is not set, all access is blocked. The token is never exposed to the client.
 
 ### GitHub API Security Model
 
