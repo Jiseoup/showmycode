@@ -76,4 +76,4 @@ The API route (`app/api/github/[...path]/route.ts`) validates that requested rep
 - **Pagination** — implemented via `?page=N` searchParams on server components; `hasNext` is inferred from `results.length === perPage` (GitHub API does not return total count).
 - **Styling** — Tailwind CSS v4 with class-based dark mode; CSS custom properties for theming; `lib/utils.ts` exports `cn()` (clsx + tailwind-merge)
 - **shadcn/ui** — configured in `components.json` (zinc base color, `@/` aliases)
-- **Comments** — all code comments must be written in English
+- **Comments** — all code comments must be written in English and end with a period.
