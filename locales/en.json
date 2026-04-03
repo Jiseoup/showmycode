@@ -16,7 +16,19 @@
   },
   "commits": {
     "title": "Commit History",
-    "countSuffix": ""
+    "countSuffix": "",
+    "page": "Page",
+    "prev": "Prev",
+    "next": "Next",
+    "backToList": "Back to list",
+    "filesChanged": "Files changed",
+    "binaryFile": "Binary file",
+    "added": "added",
+    "removed": "removed",
+    "modified": "modified",
+    "renamed": "renamed",
+    "foldAll": "Fold all",
+    "unfoldAll": "Unfold all"
   },
   "pulls": {
     "title": "Pull Requests",
@@ -24,7 +36,25 @@
     "empty": "No pull requests.",
     "merged": "Merged",
     "open": "Open",
-    "closed": "Closed"
+    "closed": "Closed",
+    "page": "Page",
+    "prev": "Prev",
+    "next": "Next",
+    "backToList": "Back to list",
+    "noBody": "No description",
+    "filesChanged": "Files changed",
+    "additions": "additions",
+    "deletions": "deletions",
+    "binaryFile": "Binary file",
+    "added": "added",
+    "removed": "removed",
+    "modified": "modified",
+    "renamed": "renamed",
+    "tabOverview": "Overview",
+    "tabCommits": "Commits",
+    "tabFiles": "Files changed",
+    "foldAll": "Fold all",
+    "unfoldAll": "Unfold all"
   },
   "error": {
     "title": "Failed to load data.",

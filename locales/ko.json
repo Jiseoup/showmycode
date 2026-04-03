@@ -16,7 +16,19 @@
   },
   "commits": {
     "title": "커밋 히스토리",
-    "countSuffix": "개"
+    "countSuffix": "개",
+    "page": "페이지",
+    "prev": "이전",
+    "next": "다음",
+    "backToList": "목록으로",
+    "filesChanged": "변경된 파일",
+    "binaryFile": "바이너리 파일",
+    "added": "추가됨",
+    "removed": "삭제됨",
+    "modified": "수정됨",
+    "renamed": "이름 변경됨",
+    "foldAll": "모두 접기",
+    "unfoldAll": "모두 펼치기"
   },
   "pulls": {
     "title": "Pull Requests",
@@ -24,7 +36,25 @@
     "empty": "PR이 없습니다.",
     "merged": "Merged",
     "open": "Open",
-    "closed": "Closed"
+    "closed": "Closed",
+    "page": "페이지",
+    "prev": "이전",
+    "next": "다음",
+    "backToList": "목록으로",
+    "noBody": "설명 없음",
+    "filesChanged": "변경된 파일",
+    "additions": "추가",
+    "deletions": "삭제",
+    "binaryFile": "바이너리 파일",
+    "added": "추가됨",
+    "removed": "삭제됨",
+    "modified": "수정됨",
+    "renamed": "이름 변경됨",
+    "tabOverview": "Overview",
+    "tabCommits": "Commits",
+    "tabFiles": "Files changed",
+    "foldAll": "모두 접기",
+    "unfoldAll": "모두 펼치기"
   },
   "error": {
     "title": "데이터를 불러오지 못했습니다.",

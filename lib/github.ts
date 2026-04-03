@@ -38,13 +38,44 @@ export async function getContents(owner: string, repo: string, path: string) {
 }
 
 // 커밋 목록
-export async function getCommits(owner: string, repo: string, perPage = 30) {
-  return ghFetch<GhCommit[]>(`repos/${owner}/${repo}/commits`, { per_page: String(perPage) });
+export async function getCommits(owner: string, repo: string, perPage = 30, page = 1) {
+  return ghFetch<GhCommit[]>(`repos/${owner}/${repo}/commits`, {
+    per_page: String(perPage),
+    page: String(page),
+  });
 }
 
 // PR 목록
-export async function getPulls(owner: string, repo: string, state: "open" | "closed" | "all" = "all") {
-  return ghFetch<GhPull[]>(`repos/${owner}/${repo}/pulls`, { state, per_page: "50" });
+export async function getPulls(owner: string, repo: string, state: "open" | "closed" | "all" = "all", perPage = 30, page = 1) {
+  return ghFetch<GhPull[]>(`repos/${owner}/${repo}/pulls`, {
+    state,
+    per_page: String(perPage),
+    page: String(page),
+  });
+}
+
+// PR 단건
+export async function getPull(owner: string, repo: string, number: number) {
+  return ghFetch<GhPull>(`repos/${owner}/${repo}/pulls/${number}`);
+}
+
+// PR 변경 파일 목록
+export async function getPullFiles(owner: string, repo: string, number: number) {
+  return ghFetch<GhPullFile[]>(`repos/${owner}/${repo}/pulls/${number}/files`, {
+    per_page: "100",
+  });
+}
+
+// PR 커밋 목록
+export async function getPullCommits(owner: string, repo: string, number: number) {
+  return ghFetch<GhCommit[]>(`repos/${owner}/${repo}/pulls/${number}/commits`, {
+    per_page: "100",
+  });
+}
+
+// 커밋 단건 (파일 변경 포함)
+export async function getCommit(owner: string, repo: string, sha: string) {
+  return ghFetch<GhCommitDetail>(`repos/${owner}/${repo}/commits/${sha}`);
 }
 
 // --- 타입 ---
@@ -85,6 +116,11 @@ export type GhCommit = {
   author: { login: string; avatar_url: string } | null;
 };
 
+export type GhCommitDetail = GhCommit & {
+  stats: { additions: number; deletions: number; total: number };
+  files: GhPullFile[];
+};
+
 export type GhPull = {
   number: number;
   title: string;
@@ -96,4 +132,15 @@ export type GhPull = {
   labels: { name: string; color: string }[];
   head: { ref: string };
   base: { ref: string };
+};
+
+export type GhPullFile = {
+  sha: string;
+  filename: string;
+  previous_filename?: string;
+  status: "added" | "removed" | "modified" | "renamed" | "copied" | "changed" | "unchanged";
+  additions: number;
+  deletions: number;
+  changes: number;
+  patch?: string;
 };
