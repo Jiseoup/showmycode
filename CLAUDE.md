@@ -46,10 +46,12 @@ The goal of showmycode is to let **anyone** securely share private GitHub reposi
 All pages are under `app/[lang]/` for internationalization (KO/EN). The proxy (Next.js 16 middleware) in `proxy.ts` detects `Accept-Language` and redirects to the appropriate locale.
 
 ```
-/[lang]/                                    → Repository listing
-/[lang]/repository/[owner]/[repo]/          → File tree + code viewer
-/[lang]/repository/[owner]/[repo]/commits/  → Commit history
-/[lang]/repository/[owner]/[repo]/pulls/    → Pull requests
+/[lang]/                                              → Repository listing
+/[lang]/repository/[owner]/[repo]/                   → File tree + code viewer
+/[lang]/repository/[owner]/[repo]/commits/           → Commit history (paginated, 50/page)
+/[lang]/repository/[owner]/[repo]/commits/[sha]      → Commit detail (files changed + diff)
+/[lang]/repository/[owner]/[repo]/pulls/             → Pull request list (paginated, 30/page)
+/[lang]/repository/[owner]/[repo]/pulls/[number]     → PR detail (Overview / Commits / Files changed tabs)
 ```
 
 ### GitHub API Security Model
@@ -66,8 +68,12 @@ The API route (`app/api/github/[...path]/route.ts`) validates that requested rep
 
 ### Key Patterns
 
-- **Server Components by default** — pages use `async` components for data fetching; interactive components (`FileTree.tsx`, `LangSwitcher.tsx`, `ThemeToggle.tsx`) are `"use client"`
+- **Server Components by default** — pages use `async` components for data fetching; interactive components (`FileTree.tsx`, `LangSwitcher.tsx`, `ThemeToggle.tsx`, `FilesChanged.tsx`) are `"use client"`
 - **i18n** — `lib/i18n.server.ts` loads dictionaries server-side; `lib/i18n.ts` holds types and locale config
 - **Syntax highlighting** — `CodeViewer.tsx` uses Shiki with `github-light`/`github-dark` themes, switching based on the `dark` class on `<html>`
+- **Markdown rendering** — `MarkdownBody.tsx` uses `react-markdown` + `remark-gfm` with custom Tailwind-styled components (no `@tailwindcss/typography`). Use this component for any user-generated Markdown content.
+- **Diff view** — `FilesChanged.tsx` renders GitHub-style diffs with per-file and global fold/unfold. Accepts `GhPullFile[]` and a dict slice; reused across PR detail and commit detail pages.
+- **Pagination** — implemented via `?page=N` searchParams on server components; `hasNext` is inferred from `results.length === perPage` (GitHub API does not return total count).
 - **Styling** — Tailwind CSS v4 with class-based dark mode; CSS custom properties for theming; `lib/utils.ts` exports `cn()` (clsx + tailwind-merge)
 - **shadcn/ui** — configured in `components.json` (zinc base color, `@/` aliases)
+- **Comments** — all code comments must be written in English
