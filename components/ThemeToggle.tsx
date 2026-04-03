@@ -2,6 +2,7 @@
 
 import { useSyncExternalStore } from "react";
 
+// Watch for class changes on <html> so the icon stays in sync when the theme is toggled elsewhere.
 function subscribe(cb: () => void) {
   const mo = new MutationObserver(cb);
   mo.observe(document.documentElement, { attributes: true, attributeFilter: ["class"] });
@@ -9,6 +10,7 @@ function subscribe(cb: () => void) {
 }
 
 export function ThemeToggle() {
+  // useSyncExternalStore provides the SSR-safe snapshot (() => false) to avoid hydration mismatch.
   const dark = useSyncExternalStore(
     subscribe,
     () => document.documentElement.classList.contains("dark"),
@@ -25,7 +27,7 @@ export function ThemeToggle() {
     <button
       onClick={toggle}
       className="p-2 rounded-md hover:bg-accent transition-colors text-muted-foreground hover:text-foreground"
-      aria-label="테마 전환"
+      aria-label="Toggle theme"
       suppressHydrationWarning
     >
       {dark ? (

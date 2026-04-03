@@ -37,12 +37,12 @@ export function RepoCard({
     >
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0">
-          {/* 레포 이름 */}
+          {/* Repo name. */}
           <p className="font-semibold text-blue-600 dark:text-blue-400 truncate">
             {name}
           </p>
 
-          {/* 설명 */}
+          {/* Description. */}
           {repo.description ? (
             <p className="text-sm text-muted-foreground mt-1 line-clamp-2">
               {repo.description}
@@ -53,7 +53,7 @@ export function RepoCard({
             </p>
           )}
 
-          {/* 토픽 태그 */}
+          {/* Topic tags. */}
           {repo.topics.length > 0 && (
             <div className="flex items-center gap-1.5 mt-2 flex-wrap">
               {repo.topics.map((topic) => (
@@ -67,7 +67,7 @@ export function RepoCard({
             </div>
           )}
 
-          {/* 메타 정보 */}
+          {/* Meta info. */}
           <div className="flex items-center gap-4 mt-3 text-xs text-muted-foreground flex-wrap">
             {langColor && repo.language && (
               <span className="flex items-center gap-1.5">
@@ -90,7 +90,7 @@ export function RepoCard({
           </div>
         </div>
 
-        {/* Private / Public 뱃지 */}
+        {/* Private/Public badge. */}
         <span className="shrink-0 text-xs border border-border rounded-full px-2 py-0.5 text-muted-foreground">
           {repo.private ? "Private" : "Public"}
         </span>

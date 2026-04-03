@@ -29,7 +29,7 @@ export default async function CommitDetailPage({ params }: Props) {
         ← {dict.commits.backToList}
       </Link>
 
-      {/* 커밋 헤더 */}
+      {/* Commit header. */}
       <div className="border border-border rounded-lg p-4 space-y-3">
         <div>
           <p className="font-semibold text-base leading-snug">{title}</p>
@@ -59,7 +59,7 @@ export default async function CommitDetailPage({ params }: Props) {
         </div>
       </div>
 
-      {/* 변경된 파일 */}
+      {/* Files changed. */}
       <div>
         <h2 className="text-sm font-semibold mb-3">
           {dict.commits.filesChanged}

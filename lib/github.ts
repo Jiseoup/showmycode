@@ -7,6 +7,7 @@ const headers = {
   "X-GitHub-Api-Version": "2022-11-28",
 };
 
+// All GitHub API calls go through this helper so PAT headers and cache policy are applied consistently.
 async function ghFetch<T>(path: string, params?: Record<string, string>): Promise<T> {
   const url = new URL(`${BASE}/${path}`);
   if (params) Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v));
@@ -15,29 +16,29 @@ async function ghFetch<T>(path: string, params?: Record<string, string>): Promis
   return res.json();
 }
 
-// 레포 정보
+// Repository info.
 export async function getRepo(owner: string, repo: string) {
   return ghFetch<GhRepo>(`repos/${owner}/${repo}`);
 }
 
-// 허용된 레포 목록 (환경변수 기반)
+// Allowed repo list (from environment variables).
 export function getAllowedRepos(): { owner: string; repo: string }[] {
   const owner = process.env.GITHUB_OWNER!;
   const repos = (process.env.GITHUB_REPOS ?? "").split(",").map((r) => r.trim()).filter(Boolean);
   return repos.map((repo) => ({ owner, repo }));
 }
 
-// 파일 트리
+// File tree.
 export async function getTree(owner: string, repo: string, sha = "HEAD") {
   return ghFetch<GhTree>(`repos/${owner}/${repo}/git/trees/${sha}`, { recursive: "1" });
 }
 
-// 파일 내용
+// File contents.
 export async function getContents(owner: string, repo: string, path: string) {
   return ghFetch<GhContent>(`repos/${owner}/${repo}/contents/${encodeURIComponent(path)}`);
 }
 
-// 커밋 목록
+// Commit list.
 export async function getCommits(owner: string, repo: string, perPage = 30, page = 1) {
   return ghFetch<GhCommit[]>(`repos/${owner}/${repo}/commits`, {
     per_page: String(perPage),
@@ -45,7 +46,7 @@ export async function getCommits(owner: string, repo: string, perPage = 30, page
   });
 }
 
-// PR 목록
+// PR list.
 export async function getPulls(owner: string, repo: string, state: "open" | "closed" | "all" = "all", perPage = 30, page = 1) {
   return ghFetch<GhPull[]>(`repos/${owner}/${repo}/pulls`, {
     state,
@@ -54,31 +55,31 @@ export async function getPulls(owner: string, repo: string, state: "open" | "clo
   });
 }
 
-// PR 단건
+// Single PR.
 export async function getPull(owner: string, repo: string, number: number) {
   return ghFetch<GhPull>(`repos/${owner}/${repo}/pulls/${number}`);
 }
 
-// PR 변경 파일 목록
+// PR changed files.
 export async function getPullFiles(owner: string, repo: string, number: number) {
   return ghFetch<GhPullFile[]>(`repos/${owner}/${repo}/pulls/${number}/files`, {
     per_page: "100",
   });
 }
 
-// PR 커밋 목록
+// PR commit list.
 export async function getPullCommits(owner: string, repo: string, number: number) {
   return ghFetch<GhCommit[]>(`repos/${owner}/${repo}/pulls/${number}/commits`, {
     per_page: "100",
   });
 }
 
-// 커밋 단건 (파일 변경 포함)
+// Single commit (includes file changes).
 export async function getCommit(owner: string, repo: string, sha: string) {
   return ghFetch<GhCommitDetail>(`repos/${owner}/${repo}/commits/${sha}`);
 }
 
-// --- 타입 ---
+// Types.
 export type GhRepo = {
   name: string;
   full_name: string;
@@ -116,6 +117,7 @@ export type GhCommit = {
   author: { login: string; avatar_url: string } | null;
 };
 
+// GhPullFile is reused here because the GitHub API returns the same file-change shape for both PR files and commit files.
 export type GhCommitDetail = GhCommit & {
   stats: { additions: number; deletions: number; total: number };
   files: GhPullFile[];

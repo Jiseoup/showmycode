@@ -10,7 +10,7 @@ export function LangSwitcher({ currentLang }: { currentLang: Locale }) {
   const pathname = usePathname();
 
   function switchTo(lang: Locale) {
-    // /ko/... → /en/...  or  /ko → /en
+    // Replace the locale segment: /ko/... → /en/... or /ko → /en.
     const segments = pathname.split("/");
     segments[1] = lang;
     return segments.join("/") || "/";

@@ -4,6 +4,8 @@ import { getAllowedRepos } from "@/lib/github";
 const BASE = "https://api.github.com";
 const PAT  = process.env.GITHUB_PAT!;
 
+// This route proxies all GitHub API requests so the PAT never reaches the client.
+// It validates every request against the GITHUB_REPOS allowlist before forwarding.
 export async function GET(
   req: NextRequest,
   { params }: { params: Promise<{ path: string[] }> }
@@ -11,7 +13,7 @@ export async function GET(
   const { path } = await params;
   const ghPath = path.join("/");
 
-  // repos/{owner}/{repo}/... 형태에서 owner, repo 추출 후 허용 목록 검사
+  // Extract owner and repo from repos/{owner}/{repo}/... and validate against allowlist.
   const match = ghPath.match(/^repos\/([^/]+)\/([^/]+)/);
   if (match) {
     const [, owner, repo] = match;

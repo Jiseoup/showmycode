@@ -53,7 +53,7 @@ export default async function PullDetailPage({ params, searchParams }: Props) {
     getDictionary(lang as Locale),
   ]);
 
-  // 탭에 따라 필요한 데이터만 패치
+  // Fetch only the data needed for the active tab.
   const [files, commits] = await Promise.all([
     tab === "files" ? getPullFiles(owner, repo, prNumber) : Promise.resolve(null),
     tab === "commits" ? getPullCommits(owner, repo, prNumber) : Promise.resolve(null),
@@ -70,7 +70,7 @@ export default async function PullDetailPage({ params, searchParams }: Props) {
 
   return (
     <main className="flex-1 overflow-auto max-w-4xl mx-auto w-full px-6 py-6 space-y-5">
-      {/* 뒤로가기 */}
+      {/* Back link. */}
       <Link
         href={`/${lang}/repository/${owner}/${repo}/pulls`}
         className="text-xs text-muted-foreground hover:text-foreground transition-colors"
@@ -78,7 +78,7 @@ export default async function PullDetailPage({ params, searchParams }: Props) {
         ← {dict.pulls.backToList}
       </Link>
 
-      {/* PR 헤더 */}
+      {/* PR header. */}
       <div>
         <div className="flex items-start gap-2 flex-wrap">
           <PRBadge merged={!!pr.merged_at} state={pr.state} dict={dict.pulls} />
@@ -124,7 +124,7 @@ export default async function PullDetailPage({ params, searchParams }: Props) {
         )}
       </div>
 
-      {/* 탭 네비게이션 */}
+      {/* Tab navigation. */}
       <div className="flex gap-1 border-b border-border">
         {tabs.map(({ key, label }) => (
           <Link
@@ -142,7 +142,7 @@ export default async function PullDetailPage({ params, searchParams }: Props) {
         ))}
       </div>
 
-      {/* Overview */}
+      {/* Overview. */}
       {tab === "overview" && (
         <div className="border border-border rounded-lg p-4 text-foreground">
           {pr.body?.trim() ? (

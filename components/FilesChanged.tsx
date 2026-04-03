@@ -57,6 +57,7 @@ function DiffView({ patch }: { patch: string }) {
 }
 
 export function FilesChanged({ files, dict }: { files: GhPullFile[]; dict: Dict }) {
+  // Keyed by file SHA so that fold state survives list re-renders without index drift.
   const [folded, setFolded] = useState<Record<string, boolean>>({});
 
   const allFolded = files.every((f) => folded[f.sha]);

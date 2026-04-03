@@ -13,7 +13,7 @@ export async function CodeViewer({
 }) {
   const file = await getContents(owner, repo, path);
 
-  // base64 디코딩
+  // Decode base64 content.
   const raw = file.encoding === "base64"
     ? Buffer.from(file.content.replace(/\n/g, ""), "base64").toString("utf-8")
     : file.content;

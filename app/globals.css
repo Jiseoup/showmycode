@@ -47,7 +47,7 @@
   body { @apply bg-background text-foreground; }
 }
 
-/* Shiki 다크모드 */
+/* Shiki dark mode. */
 .dark .shiki,
 .dark .shiki span {
   color: var(--shiki-dark) !important;

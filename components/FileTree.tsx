@@ -38,7 +38,7 @@ function buildTree(items: GhTreeItem[]): TreeNode[] {
     }
   }
 
-  // 폴더 먼저, 파일 나중 정렬
+  // Sort: directories first, then files.
   const sort = (nodes: TreeNode[]): TreeNode[] =>
     nodes
       .sort((a, b) => {

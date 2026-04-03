@@ -2,6 +2,7 @@
 
 import { useParams } from "next/navigation";
 
+// Inline i18n strings here because error boundaries must be "use client" and cannot call getDictionary (server-only).
 const messages = {
   ko: { title: "데이터를 불러오지 못했습니다.", retry: "다시 시도" },
   en: { title: "Failed to load data.", retry: "Try again" },

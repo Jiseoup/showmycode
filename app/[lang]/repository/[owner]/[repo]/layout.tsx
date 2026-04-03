@@ -14,6 +14,7 @@ export default async function RepoLayout({ children, params }: Props) {
   const { lang, owner, repo } = await params;
   const locale = lang as Locale;
 
+  // Guard: reject any repo not in the allowlist before fetching or rendering anything.
   const allowed = getAllowedRepos().some(
     (r) => r.owner === owner && r.repo === repo
   );

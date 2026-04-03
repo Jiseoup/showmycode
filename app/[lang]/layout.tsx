@@ -13,6 +13,7 @@ export default async function LangLayout({
   return <>{children}</>;
 }
 
+// Pre-render both locale roots at build time to avoid a dynamic fallback on first visit.
 export function generateStaticParams() {
   return [{ lang: "ko" }, { lang: "en" }];
 }

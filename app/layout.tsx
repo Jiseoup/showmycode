@@ -13,7 +13,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ko" suppressHydrationWarning>
       <head>
-        {/* 새로고침 시 다크모드 깜빡임 방지 */}
+        {/* Prevent dark mode flash on page load. */}
         <script dangerouslySetInnerHTML={{
           __html: `
             try {
