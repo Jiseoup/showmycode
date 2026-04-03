@@ -19,11 +19,11 @@ export default function GlobalError({
           fontFamily: "sans-serif",
         }}
       >
-        <p style={{ fontSize: "14px", fontWeight: 500 }}>Something went wrong.</p>
+        <p style={{ fontSize: "16px", fontWeight: 500 }}>Something went wrong.</p>
         <button
           onClick={unstable_retry}
           style={{
-            fontSize: "12px",
+            fontSize: "14px",
             padding: "6px 12px",
             border: "1px solid #ccc",
             borderRadius: "4px",
