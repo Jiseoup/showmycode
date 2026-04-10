@@ -29,21 +29,30 @@ export function getAllowedRepos(): { owner: string; repo: string }[] {
 }
 
 // File tree.
-export async function getTree(owner: string, repo: string, sha = "HEAD") {
-  return ghFetch<GhTree>(`repos/${owner}/${repo}/git/trees/${sha}`, { recursive: "1" });
+export async function getTree(owner: string, repo: string, ref = "HEAD") {
+  return ghFetch<GhTree>(`repos/${owner}/${repo}/git/trees/${ref}`, { recursive: "1" });
 }
 
 // File contents.
-export async function getContents(owner: string, repo: string, path: string) {
-  return ghFetch<GhContent>(`repos/${owner}/${repo}/contents/${encodeURIComponent(path)}`);
+export async function getContents(owner: string, repo: string, path: string, ref = "HEAD") {
+  return ghFetch<GhContent>(
+    `repos/${owner}/${repo}/contents/${encodeURIComponent(path)}`,
+    { ref }
+  );
 }
 
-// Commit list.
-export async function getCommits(owner: string, repo: string, perPage = 30, page = 1) {
+// Commit list. The `sha` param accepts a branch name or commit SHA.
+export async function getCommits(owner: string, repo: string, sha = "HEAD", perPage = 30, page = 1) {
   return ghFetch<GhCommit[]>(`repos/${owner}/${repo}/commits`, {
+    sha,
     per_page: String(perPage),
     page: String(page),
   });
+}
+
+// Branch list.
+export async function getBranches(owner: string, repo: string) {
+  return ghFetch<GhBranch[]>(`repos/${owner}/${repo}/branches`, { per_page: "100" });
 }
 
 // PR list.
@@ -134,6 +143,11 @@ export type GhPull = {
   labels: { name: string; color: string }[];
   head: { ref: string };
   base: { ref: string };
+};
+
+export type GhBranch = {
+  name: string;
+  protected: boolean;
 };
 
 export type GhPullFile = {

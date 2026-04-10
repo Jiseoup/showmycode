@@ -6,12 +6,14 @@ export async function CodeViewer({
   owner,
   repo,
   path,
+  branch = "HEAD",
 }: {
   owner: string;
   repo: string;
   path: string;
+  branch?: string;
 }) {
-  const file = await getContents(owner, repo, path);
+  const file = await getContents(owner, repo, path, branch);
 
   // Decode base64 content.
   const raw = file.encoding === "base64"

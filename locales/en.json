@@ -12,6 +12,7 @@
   },
   "code": {
     "files": "Files",
+    "branch": "Branch",
     "selectFile": "Select a file from the left"
   },
   "commits": {
