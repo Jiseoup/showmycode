@@ -13,7 +13,7 @@ export async function Sidebar({ owner, repo, lang, filesLabel, selectedPath }: P
   const { tree } = await getTree(owner, repo);
 
   return (
-    <aside className="w-64 shrink-0 border-r border-border overflow-y-auto flex flex-col">
+    <aside className="flex flex-col h-full overflow-hidden">
       <div className="px-3 py-2.5 border-b border-border">
         <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
           {filesLabel}

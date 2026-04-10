@@ -28,7 +28,7 @@ export default async function CommitsPage({ params, searchParams }: Props) {
     `/${lang}/repository/${owner}/${repo}/commits?page=${p}`;
 
   return (
-    <main className="flex-1 overflow-auto max-w-4xl mx-auto w-full px-6 py-6">
+    <main className="flex-1 overflow-auto max-w-4xl mx-auto w-full px-3 md:px-6 py-4 md:py-6">
       <h2 className="text-lg font-semibold mb-4">
         {dict.commits.title}
         <span className="ml-2 text-sm font-normal text-muted-foreground">
@@ -81,7 +81,7 @@ export default async function CommitsPage({ params, searchParams }: Props) {
       </ul>
 
       {(hasPrev || hasNext) && (
-        <div className="flex items-center justify-between mt-6">
+        <div className="flex items-center justify-between mt-6 gap-2 flex-wrap">
           {hasPrev ? (
             <Link
               href={pageUrl(page - 1)}
