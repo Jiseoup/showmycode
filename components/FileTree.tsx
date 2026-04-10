@@ -56,6 +56,7 @@ function TreeNodeItem({
   repo,
   lang,
   selectedPath,
+  branch,
   depth,
 }: {
   node: TreeNode;
@@ -63,6 +64,7 @@ function TreeNodeItem({
   repo: string;
   lang: string;
   selectedPath?: string;
+  branch: string;
   depth: number;
 }) {
   const [open, setOpen] = useState(
@@ -95,6 +97,7 @@ function TreeNodeItem({
                 repo={repo}
                 lang={lang}
                 selectedPath={selectedPath}
+                branch={branch}
                 depth={depth + 1}
               />
             ))}
@@ -108,7 +111,7 @@ function TreeNodeItem({
   return (
     <li>
       <Link
-        href={`/${lang}/repository/${owner}/${repo}?path=${encodeURIComponent(node.path)}`}
+        href={`/${lang}/repository/${owner}/${repo}?path=${encodeURIComponent(node.path)}&branch=${encodeURIComponent(branch)}`}
         className={cn(
           "flex items-center gap-1.5 w-full text-sm px-2 py-0.5 rounded transition-colors truncate",
           isSelected
@@ -132,12 +135,14 @@ export function FileTree({
   repo,
   lang,
   selectedPath,
+  branch,
 }: {
   items: GhTreeItem[];
   owner: string;
   repo: string;
   lang: string;
   selectedPath?: string;
+  branch: string;
 }) {
   const tree = buildTree(items);
 
@@ -151,6 +156,7 @@ export function FileTree({
           repo={repo}
           lang={lang}
           selectedPath={selectedPath}
+          branch={branch}
           depth={0}
         />
       ))}

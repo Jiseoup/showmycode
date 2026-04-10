@@ -1,40 +1,53 @@
+import { Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { getCommits } from "@/lib/github";
+import { getCommits, getRepo, getBranches } from "@/lib/github";
 import { formatDate } from "@/lib/utils";
 import { getDictionary, type Locale } from "@/lib/i18n.server";
+import { BranchSelector } from "@/components/BranchSelector";
 
 const PER_PAGE = 50;
 
 type Props = {
   params: Promise<{ lang: string; owner: string; repo: string }>;
-  searchParams: Promise<{ page?: string }>;
+  searchParams: Promise<{ page?: string; branch?: string }>;
 };
 
 export default async function CommitsPage({ params, searchParams }: Props) {
   const { lang, owner, repo } = await params;
-  const { page: pageParam } = await searchParams;
+  const { page: pageParam, branch: branchParam } = await searchParams;
   const page = Math.max(1, parseInt(pageParam ?? "1", 10) || 1);
 
-  const [commits, dict] = await Promise.all([
-    getCommits(owner, repo, PER_PAGE, page),
+  const [repoData, branches, dict] = await Promise.all([
+    getRepo(owner, repo),
+    getBranches(owner, repo),
     getDictionary(lang as Locale),
   ]);
+
+  const branchNames = branches.map((b) => b.name);
+  const branch = branchNames.find((n) => n === branchParam) ?? repoData.default_branch;
+
+  const commits = await getCommits(owner, repo, branch, PER_PAGE, page);
 
   const hasPrev = page > 1;
   const hasNext = commits.length === PER_PAGE;
 
   const pageUrl = (p: number) =>
-    `/${lang}/repository/${owner}/${repo}/commits?page=${p}`;
+    `/${lang}/repository/${owner}/${repo}/commits?page=${p}&branch=${encodeURIComponent(branch)}`;
 
   return (
     <main className="flex-1 overflow-auto max-w-4xl mx-auto w-full px-3 md:px-6 py-4 md:py-6">
-      <h2 className="text-lg font-semibold mb-4">
-        {dict.commits.title}
-        <span className="ml-2 text-sm font-normal text-muted-foreground">
-          {dict.commits.page} {page}
-        </span>
-      </h2>
+      <div className="flex items-center justify-between mb-4 flex-wrap gap-2">
+        <h2 className="text-lg font-semibold">
+          {dict.commits.title}
+          <span className="ml-2 text-sm font-normal text-muted-foreground">
+            {dict.commits.page} {page}
+          </span>
+        </h2>
+        <Suspense>
+          <BranchSelector branches={branchNames} current={branch} />
+        </Suspense>
+      </div>
 
       <ul className="space-y-px">
         {commits.map((c) => {
