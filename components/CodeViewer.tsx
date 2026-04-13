@@ -29,7 +29,7 @@ export async function CodeViewer({
 
   return (
     <div
-      className="text-sm overflow-auto [&>pre]:p-5 [&>pre]:min-h-full"
+      className="code-viewer text-sm overflow-auto [&>pre]:p-5 [&>pre]:min-h-full"
       dangerouslySetInnerHTML={{ __html: html }}
     />
   );

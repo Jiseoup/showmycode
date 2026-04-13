@@ -59,6 +59,22 @@
   body { @apply bg-background text-foreground; }
 }
 
+/* Shiki line numbers. */
+.code-viewer code {
+  counter-reset: line;
+}
+
+.code-viewer code .line::before {
+  counter-increment: line;
+  content: counter(line);
+  display: inline-block;
+  width: 3ch;
+  margin-right: 1.5rem;
+  text-align: right;
+  color: hsl(var(--muted-foreground) / 0.5);
+  user-select: none;
+}
+
 /* Shiki dark mode. */
 .dark .shiki,
 .dark .shiki span {
