@@ -15,6 +15,7 @@ type Props = {
 
 export async function Sidebar({ owner, repo, lang, filesLabel, selectedPath, branches, branch }: Props) {
   const { tree } = await getTree(owner, repo, branch);
+  const defaultOpenDepth = Number(process.env.FILE_TREE_DEPTH) || 0;
 
   return (
     <aside className="flex flex-col h-full overflow-hidden">
@@ -35,6 +36,7 @@ export async function Sidebar({ owner, repo, lang, filesLabel, selectedPath, bra
           lang={lang}
           selectedPath={selectedPath}
           branch={branch}
+          defaultOpenDepth={defaultOpenDepth}
         />
       </div>
     </aside>

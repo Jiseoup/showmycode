@@ -58,6 +58,7 @@ function TreeNodeItem({
   selectedPath,
   branch,
   depth,
+  defaultOpenDepth,
 }: {
   node: TreeNode;
   owner: string;
@@ -66,9 +67,10 @@ function TreeNodeItem({
   selectedPath?: string;
   branch: string;
   depth: number;
+  defaultOpenDepth: number;
 }) {
   const [open, setOpen] = useState(
-    depth < 1 || (selectedPath?.startsWith(node.path + "/") ?? false)
+    depth < defaultOpenDepth || (selectedPath?.startsWith(node.path + "/") ?? false)
   );
 
   if (node.type === "tree") {
@@ -99,6 +101,7 @@ function TreeNodeItem({
                 selectedPath={selectedPath}
                 branch={branch}
                 depth={depth + 1}
+                defaultOpenDepth={defaultOpenDepth}
               />
             ))}
           </ul>
@@ -136,6 +139,7 @@ export function FileTree({
   lang,
   selectedPath,
   branch,
+  defaultOpenDepth = 0,
 }: {
   items: GhTreeItem[];
   owner: string;
@@ -143,6 +147,7 @@ export function FileTree({
   lang: string;
   selectedPath?: string;
   branch: string;
+  defaultOpenDepth?: number;
 }) {
   const tree = buildTree(items);
 
@@ -158,6 +163,7 @@ export function FileTree({
           selectedPath={selectedPath}
           branch={branch}
           depth={0}
+          defaultOpenDepth={defaultOpenDepth}
         />
       ))}
     </ul>
