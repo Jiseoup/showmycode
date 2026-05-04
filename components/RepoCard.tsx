@@ -33,33 +33,27 @@ export function RepoCard({
   return (
     <Link
       href={`/${lang}/repository/${owner}/${name}`}
-      className="block rounded-lg border border-border bg-card p-5 hover:border-foreground/30 hover:shadow-sm transition-all"
+      className="border-border bg-card hover:border-foreground/30 block rounded-lg border p-5 transition-all hover:shadow-sm"
     >
       <div className="flex items-start justify-between gap-4">
         <div className="min-w-0">
           {/* Repo name. */}
-          <p className="font-semibold text-blue-600 dark:text-blue-400 truncate">
-            {name}
-          </p>
+          <p className="truncate font-semibold text-blue-600 dark:text-blue-400">{name}</p>
 
           {/* Description. */}
           {repo.description ? (
-            <p className="text-sm text-muted-foreground mt-1 line-clamp-2">
-              {repo.description}
-            </p>
+            <p className="text-muted-foreground mt-1 line-clamp-2 text-sm">{repo.description}</p>
           ) : (
-            <p className="text-sm text-muted-foreground/50 mt-1 italic">
-              {dict.noDescription}
-            </p>
+            <p className="text-muted-foreground/50 mt-1 text-sm italic">{dict.noDescription}</p>
           )}
 
           {/* Topic tags. */}
           {repo.topics.length > 0 && (
-            <div className="flex items-center gap-1.5 mt-2 flex-wrap">
+            <div className="mt-2 flex flex-wrap items-center gap-1.5">
               {repo.topics.map((topic) => (
                 <span
                   key={topic}
-                  className="text-xs bg-blue-500/10 text-blue-600 dark:text-blue-400 rounded-full px-2.5 py-0.5"
+                  className="rounded-full bg-blue-500/10 px-2.5 py-0.5 text-xs text-blue-600 dark:text-blue-400"
                 >
                   {topic}
                 </span>
@@ -68,11 +62,11 @@ export function RepoCard({
           )}
 
           {/* Meta info. */}
-          <div className="flex items-center gap-4 mt-3 text-xs text-muted-foreground flex-wrap">
+          <div className="text-muted-foreground mt-3 flex flex-wrap items-center gap-4 text-xs">
             {langColor && repo.language && (
               <span className="flex items-center gap-1.5">
                 <span
-                  className="w-2.5 h-2.5 rounded-full shrink-0"
+                  className="h-2.5 w-2.5 shrink-0 rounded-full"
                   style={{ background: langColor }}
                 />
                 {repo.language}
@@ -80,18 +74,20 @@ export function RepoCard({
             )}
 
             <span className="flex items-center gap-1">
-              <svg viewBox="0 0 16 16" className="w-3.5 h-3.5 fill-current" aria-hidden>
-                <path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z"/>
+              <svg viewBox="0 0 16 16" className="h-3.5 w-3.5 fill-current" aria-hidden>
+                <path d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25z" />
               </svg>
               {repo.stargazers_count}
             </span>
 
-            <span>{dict.updated} {formatDate(repo.updated_at, lang)}</span>
+            <span>
+              {dict.updated} {formatDate(repo.updated_at, lang)}
+            </span>
           </div>
         </div>
 
         {/* Private/Public badge. */}
-        <span className="shrink-0 text-xs border border-border rounded-full px-2 py-0.5 text-muted-foreground">
+        <span className="border-border text-muted-foreground shrink-0 rounded-full border px-2 py-0.5 text-xs">
           {repo.private ? "Private" : "Public"}
         </span>
       </div>

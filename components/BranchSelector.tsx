@@ -29,7 +29,7 @@ export function BranchSelector({ branches, current }: Props) {
 
   return (
     <Select value={current} onValueChange={handleChange}>
-      <SelectTrigger className="h-7 text-xs w-full focus:ring-0 focus:ring-offset-0">
+      <SelectTrigger className="h-7 w-full text-xs focus:ring-0 focus:ring-offset-0">
         <SelectValue />
       </SelectTrigger>
       <SelectContent>

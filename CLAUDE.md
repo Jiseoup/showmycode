@@ -9,17 +9,24 @@ This project uses a recent version of Next.js with breaking changes. Before writ
 ## Commands
 
 ```bash
-npm run dev      # Start development server (http://localhost:3000)
-npm run build    # Production build
-npm run start    # Start production server
-npm run lint     # Run ESLint
+npm run dev           # Start development server (http://localhost:3000)
+npm run build         # Production build
+npm run start         # Start production server
+npm run lint          # Run ESLint
+npm run lint:fix      # Run ESLint with --fix
+npm run format        # Run Prettier write (includes Tailwind class sort)
+npm run format:check  # Run Prettier check (fails on diff — used in CI)
+npm run typecheck     # Run tsc --noEmit
 ```
 
 No test framework is configured.
 
+Coding conventions and the full toolchain rationale live in [CONTRIBUTING.md](CONTRIBUTING.md#code-conventions).
+
 ## Environment Setup
 
 Copy `.env.example` to `.env.local` and fill in:
+
 - `GITHUB_PAT` — Fine-grained GitHub personal access token (read-only: Contents + Pull requests)
 - `GITHUB_OWNER` — GitHub username/org
 - `GITHUB_REPOS` — Comma-separated repository names to expose

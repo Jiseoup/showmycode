@@ -2,14 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 import { getAllowedRepos } from "@/lib/github";
 
 const BASE = "https://api.github.com";
-const PAT  = process.env.GITHUB_PAT!;
+const PAT = process.env.GITHUB_PAT!;
 
 // This route proxies all GitHub API requests so the PAT never reaches the client.
 // It validates every request against the GITHUB_REPOS allowlist before forwarding.
-export async function GET(
-  req: NextRequest,
-  { params }: { params: Promise<{ path: string[] }> }
-) {
+export async function GET(req: NextRequest, { params }: { params: Promise<{ path: string[] }> }) {
   const { path } = await params;
   const ghPath = path.join("/");
 

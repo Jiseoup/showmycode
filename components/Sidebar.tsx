@@ -13,14 +13,22 @@ type Props = {
   branch: string;
 };
 
-export async function Sidebar({ owner, repo, lang, filesLabel, selectedPath, branches, branch }: Props) {
+export async function Sidebar({
+  owner,
+  repo,
+  lang,
+  filesLabel,
+  selectedPath,
+  branches,
+  branch,
+}: Props) {
   const { tree } = await getTree(owner, repo, branch);
   const defaultOpenDepth = Number(process.env.FILE_TREE_DEPTH) || 0;
 
   return (
-    <aside className="flex flex-col h-full overflow-hidden">
-      <div className="px-3 py-2.5 border-b border-border space-y-2">
-        <p className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
+    <aside className="flex h-full flex-col overflow-hidden">
+      <div className="border-border space-y-2 border-b px-3 py-2.5">
+        <p className="text-muted-foreground text-xs font-medium tracking-wide uppercase">
           {filesLabel}
         </p>
         <Suspense>

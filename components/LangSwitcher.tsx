@@ -22,7 +22,7 @@ export function LangSwitcher({ currentLang }: { currentLang: Locale }) {
         <span key={lang} className="flex items-center gap-0.5">
           {i > 0 && <span className="text-muted-foreground/40">|</span>}
           {lang === currentLang ? (
-            <span className="font-semibold text-foreground">{labels[lang]}</span>
+            <span className="text-foreground font-semibold">{labels[lang]}</span>
           ) : (
             <Link
               href={switchTo(lang)}

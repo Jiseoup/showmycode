@@ -13,40 +13,40 @@ type Props = {
   searchParams: Promise<{ tab?: string }>;
 };
 
-function PRBadge({ merged, state, dict }: {
+function PRBadge({
+  merged,
+  state,
+  dict,
+}: {
   merged: boolean;
   state: string;
   dict: { merged: string; open: string; closed: string };
 }) {
   if (merged)
     return (
-      <span className="text-xs px-2 py-0.5 rounded-full bg-purple-100 text-purple-800 dark:bg-purple-900/40 dark:text-purple-300 font-medium">
+      <span className="rounded-full bg-purple-100 px-2 py-0.5 text-xs font-medium text-purple-800 dark:bg-purple-900/40 dark:text-purple-300">
         {dict.merged}
       </span>
     );
   if (state === "open")
     return (
-      <span className="text-xs px-2 py-0.5 rounded-full bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300 font-medium">
+      <span className="rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-800 dark:bg-green-900/40 dark:text-green-300">
         {dict.open}
       </span>
     );
   return (
-    <span className="text-xs px-2 py-0.5 rounded-full bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-300 font-medium">
+    <span className="rounded-full bg-red-100 px-2 py-0.5 text-xs font-medium text-red-800 dark:bg-red-900/40 dark:text-red-300">
       {dict.closed}
     </span>
   );
 }
-
 
 export default async function PullDetailPage({ params, searchParams }: Props) {
   const { lang, owner, repo, number } = await params;
   const { tab: tabParam } = await searchParams;
   const prNumber = parseInt(number, 10);
 
-  const tab: Tab =
-    tabParam === "commits" ? "commits"
-    : tabParam === "files" ? "files"
-    : "overview";
+  const tab: Tab = tabParam === "commits" ? "commits" : tabParam === "files" ? "files" : "overview";
 
   const [pr, dict] = await Promise.all([
     getPull(owner, repo, prNumber),
@@ -60,33 +60,33 @@ export default async function PullDetailPage({ params, searchParams }: Props) {
   ]);
 
   const baseUrl = `/${lang}/repository/${owner}/${repo}/pulls/${prNumber}`;
-  const tabUrl = (t: Tab) => t === "overview" ? baseUrl : `${baseUrl}?tab=${t}`;
+  const tabUrl = (t: Tab) => (t === "overview" ? baseUrl : `${baseUrl}?tab=${t}`);
 
   const tabs: { key: Tab; label: string }[] = [
     { key: "overview", label: dict.pulls.tabOverview },
-    { key: "commits",  label: dict.pulls.tabCommits },
-    { key: "files",    label: dict.pulls.tabFiles },
+    { key: "commits", label: dict.pulls.tabCommits },
+    { key: "files", label: dict.pulls.tabFiles },
   ];
 
   return (
-    <main className="flex-1 overflow-auto max-w-4xl mx-auto w-full px-6 py-6 space-y-5">
+    <main className="mx-auto w-full max-w-4xl flex-1 space-y-5 overflow-auto px-6 py-6">
       {/* Back link. */}
       <Link
         href={`/${lang}/repository/${owner}/${repo}/pulls`}
-        className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+        className="text-muted-foreground hover:text-foreground text-xs transition-colors"
       >
         ← {dict.pulls.backToList}
       </Link>
 
       {/* PR header. */}
       <div>
-        <div className="flex items-start gap-2 flex-wrap">
+        <div className="flex flex-wrap items-start gap-2">
           <PRBadge merged={!!pr.merged_at} state={pr.state} dict={dict.pulls} />
-          <h1 className="text-lg font-semibold leading-snug">{pr.title}</h1>
+          <h1 className="text-lg leading-snug font-semibold">{pr.title}</h1>
           <span className="text-muted-foreground font-normal">#{pr.number}</span>
         </div>
 
-        <div className="flex items-center gap-2 mt-2 flex-wrap">
+        <div className="mt-2 flex flex-wrap items-center gap-2">
           <Image
             src={pr.user.avatar_url}
             alt={pr.user.login}
@@ -94,22 +94,22 @@ export default async function PullDetailPage({ params, searchParams }: Props) {
             height={20}
             className="rounded-full"
           />
-          <span className="text-sm text-muted-foreground">
+          <span className="text-muted-foreground text-sm">
             {pr.user.login} · {formatDate(pr.created_at, lang)}
           </span>
-          <span className="text-xs font-mono text-muted-foreground">
+          <span className="text-muted-foreground font-mono text-xs">
             {pr.head.ref} → {pr.base.ref}
           </span>
         </div>
 
         {pr.labels.length > 0 && (
-          <div className="flex items-center gap-1.5 mt-2 flex-wrap">
+          <div className="mt-2 flex flex-wrap items-center gap-1.5">
             {pr.labels.map((l) => {
               const safeColor = /^[0-9a-fA-F]{6}$/.test(l.color) ? l.color : "8b949e";
               return (
                 <span
                   key={l.name}
-                  className="text-xs px-1.5 py-0.5 rounded"
+                  className="rounded px-1.5 py-0.5 text-xs"
                   style={{
                     background: `#${safeColor}33`,
                     color: `#${safeColor}`,
@@ -125,16 +125,16 @@ export default async function PullDetailPage({ params, searchParams }: Props) {
       </div>
 
       {/* Tab navigation. */}
-      <div className="flex gap-1 border-b border-border">
+      <div className="border-border flex gap-1 border-b">
         {tabs.map(({ key, label }) => (
           <Link
             key={key}
             href={tabUrl(key)}
             className={[
-              "px-3 py-2 text-sm font-medium border-b-2 -mb-px transition-colors",
+              "-mb-px border-b-2 px-3 py-2 text-sm font-medium transition-colors",
               tab === key
                 ? "border-foreground text-foreground"
-                : "border-transparent text-muted-foreground hover:text-foreground",
+                : "text-muted-foreground hover:text-foreground border-transparent",
             ].join(" ")}
           >
             {label}
@@ -144,11 +144,11 @@ export default async function PullDetailPage({ params, searchParams }: Props) {
 
       {/* Overview. */}
       {tab === "overview" && (
-        <div className="border border-border rounded-lg p-4 text-foreground">
+        <div className="border-border text-foreground rounded-lg border p-4">
           {pr.body?.trim() ? (
             <MarkdownBody>{pr.body}</MarkdownBody>
           ) : (
-            <span className="text-sm text-muted-foreground italic">{dict.pulls.noBody}</span>
+            <span className="text-muted-foreground text-sm italic">{dict.pulls.noBody}</span>
           )}
         </div>
       )}
@@ -160,10 +160,10 @@ export default async function PullDetailPage({ params, searchParams }: Props) {
             const [title, ...bodyLines] = c.commit.message.split("\n");
             const body = bodyLines.join("\n").trim();
             return (
-              <li key={c.sha} className="border-b border-border last:border-0">
+              <li key={c.sha} className="border-border border-b last:border-0">
                 <Link
                   href={`/${lang}/repository/${owner}/${repo}/commits/${c.sha}`}
-                  className="flex items-start gap-3 py-3 hover:bg-muted/50 transition-colors rounded px-1 -mx-1"
+                  className="hover:bg-muted/50 -mx-1 flex items-start gap-3 rounded px-1 py-3 transition-colors"
                 >
                   {c.author?.avatar_url ? (
                     <Image
@@ -171,23 +171,23 @@ export default async function PullDetailPage({ params, searchParams }: Props) {
                       alt={c.author.login}
                       width={32}
                       height={32}
-                      className="rounded-full shrink-0 mt-0.5"
+                      className="mt-0.5 shrink-0 rounded-full"
                     />
                   ) : (
-                    <div className="w-8 h-8 rounded-full bg-muted shrink-0 mt-0.5" />
+                    <div className="bg-muted mt-0.5 h-8 w-8 shrink-0 rounded-full" />
                   )}
                   <div className="min-w-0 flex-1">
-                    <p className="font-medium text-sm leading-snug">{title}</p>
+                    <p className="text-sm leading-snug font-medium">{title}</p>
                     {body && (
-                      <p className="text-xs text-muted-foreground mt-1 whitespace-pre-line line-clamp-3">
+                      <p className="text-muted-foreground mt-1 line-clamp-3 text-xs whitespace-pre-line">
                         {body}
                       </p>
                     )}
-                    <p className="text-xs text-muted-foreground mt-1">
+                    <p className="text-muted-foreground mt-1 text-xs">
                       {c.commit.author.name} · {formatDate(c.commit.author.date, lang)}
                     </p>
                   </div>
-                  <code className="text-xs font-mono text-muted-foreground bg-muted px-2 py-1 rounded shrink-0">
+                  <code className="text-muted-foreground bg-muted shrink-0 rounded px-2 py-1 font-mono text-xs">
                     {c.sha.slice(0, 7)}
                   </code>
                 </Link>
@@ -198,9 +198,7 @@ export default async function PullDetailPage({ params, searchParams }: Props) {
       )}
 
       {/* Files changed */}
-      {tab === "files" && files && (
-        <FilesChanged files={files} dict={dict.pulls} />
-      )}
+      {tab === "files" && files && <FilesChanged files={files} dict={dict.pulls} />}
     </main>
   );
 }

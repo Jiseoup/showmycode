@@ -70,7 +70,7 @@ function TreeNodeItem({
   defaultOpenDepth: number;
 }) {
   const [open, setOpen] = useState(
-    depth < defaultOpenDepth || (selectedPath?.startsWith(node.path + "/") ?? false)
+    depth < defaultOpenDepth || (selectedPath?.startsWith(node.path + "/") ?? false),
   );
 
   if (node.type === "tree") {
@@ -78,14 +78,22 @@ function TreeNodeItem({
       <li>
         <button
           onClick={() => setOpen((o) => !o)}
-          className="flex items-center gap-1.5 w-full text-left px-2 py-0.5 rounded text-sm hover:bg-accent transition-colors"
+          className="hover:bg-accent flex w-full items-center gap-1.5 rounded px-2 py-0.5 text-left text-sm transition-colors"
           style={{ paddingLeft: `${8 + depth * 12}px` }}
         >
-          <svg viewBox="0 0 16 16" className={cn("w-4 h-4 fill-current text-yellow-500 shrink-0 transition-transform", open && "rotate-0")} aria-hidden>
-            {open
-              ? <path d="M1.75 2.5a.25.25 0 00-.25.25v10.5c0 .138.112.25.25.25h12.5a.25.25 0 00.25-.25v-8.5a.25.25 0 00-.25-.25H7.5c-.55 0-1.07-.26-1.4-.7l-.9-1.2a.25.25 0 00-.2-.1H1.75z"/>
-              : <path d="M1.75 2.5a.25.25 0 00-.25.25v10.5c0 .138.112.25.25.25h12.5a.25.25 0 00.25-.25v-8.5a.25.25 0 00-.25-.25H7.5c-.55 0-1.07-.26-1.4-.7l-.9-1.2a.25.25 0 00-.2-.1H1.75z"/>
-            }
+          <svg
+            viewBox="0 0 16 16"
+            className={cn(
+              "h-4 w-4 shrink-0 fill-current text-yellow-500 transition-transform",
+              open && "rotate-0",
+            )}
+            aria-hidden
+          >
+            {open ? (
+              <path d="M1.75 2.5a.25.25 0 00-.25.25v10.5c0 .138.112.25.25.25h12.5a.25.25 0 00.25-.25v-8.5a.25.25 0 00-.25-.25H7.5c-.55 0-1.07-.26-1.4-.7l-.9-1.2a.25.25 0 00-.2-.1H1.75z" />
+            ) : (
+              <path d="M1.75 2.5a.25.25 0 00-.25.25v10.5c0 .138.112.25.25.25h12.5a.25.25 0 00.25-.25v-8.5a.25.25 0 00-.25-.25H7.5c-.55 0-1.07-.26-1.4-.7l-.9-1.2a.25.25 0 00-.2-.1H1.75z" />
+            )}
           </svg>
           <span className="truncate">{node.name}</span>
         </button>
@@ -116,15 +124,15 @@ function TreeNodeItem({
       <Link
         href={`/${lang}/repository/${owner}/${repo}?path=${encodeURIComponent(node.path)}&branch=${encodeURIComponent(branch)}`}
         className={cn(
-          "flex items-center gap-1.5 w-full text-sm px-2 py-0.5 rounded transition-colors truncate",
+          "flex w-full items-center gap-1.5 truncate rounded px-2 py-0.5 text-sm transition-colors",
           isSelected
             ? "bg-accent text-accent-foreground font-medium"
-            : "hover:bg-accent text-muted-foreground hover:text-foreground"
+            : "hover:bg-accent text-muted-foreground hover:text-foreground",
         )}
         style={{ paddingLeft: `${8 + depth * 12}px` }}
       >
-        <svg viewBox="0 0 16 16" className="w-4 h-4 fill-current shrink-0 opacity-50" aria-hidden>
-          <path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0113.25 16h-9.5A1.75 1.75 0 012 14.25V1.75z"/>
+        <svg viewBox="0 0 16 16" className="h-4 w-4 shrink-0 fill-current opacity-50" aria-hidden>
+          <path d="M2 1.75C2 .784 2.784 0 3.75 0h6.586c.464 0 .909.184 1.237.513l2.914 2.914c.329.328.513.773.513 1.237v9.586A1.75 1.75 0 0113.25 16h-9.5A1.75 1.75 0 012 14.25V1.75z" />
         </svg>
         <span className="truncate">{node.name}</span>
       </Link>
@@ -152,7 +160,7 @@ export function FileTree({
   const tree = buildTree(items);
 
   return (
-    <ul className="text-sm space-y-0.5">
+    <ul className="space-y-0.5 text-sm">
       {tree.map((node) => (
         <TreeNodeItem
           key={node.path}

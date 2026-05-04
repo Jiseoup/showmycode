@@ -11,25 +11,29 @@ type Props = {
   searchParams: Promise<{ page?: string }>;
 };
 
-function PRBadge({ merged, state, dict }: {
+function PRBadge({
+  merged,
+  state,
+  dict,
+}: {
   merged: boolean;
   state: string;
   dict: { merged: string; open: string; closed: string };
 }) {
   if (merged)
     return (
-      <span className="text-xs px-2 py-0.5 rounded-full bg-purple-100 text-purple-800 dark:bg-purple-900/40 dark:text-purple-300 font-medium shrink-0">
+      <span className="shrink-0 rounded-full bg-purple-100 px-2 py-0.5 text-xs font-medium text-purple-800 dark:bg-purple-900/40 dark:text-purple-300">
         {dict.merged}
       </span>
     );
   if (state === "open")
     return (
-      <span className="text-xs px-2 py-0.5 rounded-full bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300 font-medium shrink-0">
+      <span className="shrink-0 rounded-full bg-green-100 px-2 py-0.5 text-xs font-medium text-green-800 dark:bg-green-900/40 dark:text-green-300">
         {dict.open}
       </span>
     );
   return (
-    <span className="text-xs px-2 py-0.5 rounded-full bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-300 font-medium shrink-0">
+    <span className="shrink-0 rounded-full bg-red-100 px-2 py-0.5 text-xs font-medium text-red-800 dark:bg-red-900/40 dark:text-red-300">
       {dict.closed}
     </span>
   );
@@ -48,14 +52,13 @@ export default async function PullsPage({ params, searchParams }: Props) {
   const hasPrev = page > 1;
   const hasNext = pulls.length === PER_PAGE;
 
-  const pageUrl = (p: number) =>
-    `/${lang}/repository/${owner}/${repo}/pulls?page=${p}`;
+  const pageUrl = (p: number) => `/${lang}/repository/${owner}/${repo}/pulls?page=${p}`;
 
   return (
-    <main className="flex-1 overflow-auto max-w-4xl mx-auto w-full px-3 md:px-6 py-4 md:py-6">
-      <h2 className="text-lg font-semibold mb-4">
+    <main className="mx-auto w-full max-w-4xl flex-1 overflow-auto px-3 py-4 md:px-6 md:py-6">
+      <h2 className="mb-4 text-lg font-semibold">
         {dict.pulls.title}
-        <span className="ml-2 text-sm font-normal text-muted-foreground">
+        <span className="text-muted-foreground ml-2 text-sm font-normal">
           {dict.pulls.page} {page}
         </span>
       </h2>
@@ -65,38 +68,36 @@ export default async function PullsPage({ params, searchParams }: Props) {
       ) : (
         <ul className="space-y-px">
           {pulls.map((pr) => (
-            <li key={pr.number} className="border-b border-border last:border-0">
+            <li key={pr.number} className="border-border border-b last:border-0">
               <Link
                 href={`/${lang}/repository/${owner}/${repo}/pulls/${pr.number}`}
-                className="flex items-start gap-3 py-4 hover:bg-muted/50 transition-colors rounded px-1 -mx-1"
+                className="hover:bg-muted/50 -mx-1 flex items-start gap-3 rounded px-1 py-4 transition-colors"
               >
                 <Image
                   src={pr.user.avatar_url}
                   alt={pr.user.login}
                   width={32}
                   height={32}
-                  className="rounded-full shrink-0 mt-0.5"
+                  className="mt-0.5 shrink-0 rounded-full"
                 />
 
                 <div className="min-w-0 flex-1">
-                  <div className="flex items-center gap-2 flex-wrap">
+                  <div className="flex flex-wrap items-center gap-2">
                     <PRBadge merged={!!pr.merged_at} state={pr.state} dict={dict.pulls} />
-                    <p className="font-medium text-sm">{pr.title}</p>
-                    <span className="text-xs text-muted-foreground">#{pr.number}</span>
+                    <p className="text-sm font-medium">{pr.title}</p>
+                    <span className="text-muted-foreground text-xs">#{pr.number}</span>
                   </div>
 
-                  <p className="text-xs text-muted-foreground mt-1 font-mono truncate">
+                  <p className="text-muted-foreground mt-1 truncate font-mono text-xs">
                     {pr.head.ref} → {pr.base.ref}
                   </p>
 
                   {pr.body && (
-                    <p className="text-xs text-muted-foreground mt-1.5 line-clamp-2">
-                      {pr.body}
-                    </p>
+                    <p className="text-muted-foreground mt-1.5 line-clamp-2 text-xs">{pr.body}</p>
                   )}
 
-                  <div className="flex items-center gap-2 mt-2 flex-wrap">
-                    <span className="text-xs text-muted-foreground">
+                  <div className="mt-2 flex flex-wrap items-center gap-2">
+                    <span className="text-muted-foreground text-xs">
                       {pr.user.login} · {formatDate(pr.created_at, lang)}
                     </span>
                     {pr.labels.map((l) => {
@@ -104,7 +105,7 @@ export default async function PullsPage({ params, searchParams }: Props) {
                       return (
                         <span
                           key={l.name}
-                          className="text-xs px-1.5 py-0.5 rounded"
+                          className="rounded px-1.5 py-0.5 text-xs"
                           style={{
                             background: `#${safeColor}33`,
                             color: `#${safeColor}`,
@@ -124,24 +125,24 @@ export default async function PullsPage({ params, searchParams }: Props) {
       )}
 
       {(hasPrev || hasNext) && (
-        <div className="flex items-center justify-between mt-6 gap-2 flex-wrap">
+        <div className="mt-6 flex flex-wrap items-center justify-between gap-2">
           {hasPrev ? (
             <Link
               href={pageUrl(page - 1)}
-              className="px-3 py-1.5 text-sm border border-border rounded hover:bg-muted transition-colors"
+              className="border-border hover:bg-muted rounded border px-3 py-1.5 text-sm transition-colors"
             >
               ← {dict.pulls.prev}
             </Link>
           ) : (
             <div />
           )}
-          <span className="text-sm text-muted-foreground">
+          <span className="text-muted-foreground text-sm">
             {dict.pulls.page} {page}
           </span>
           {hasNext ? (
             <Link
               href={pageUrl(page + 1)}
-              className="px-3 py-1.5 text-sm border border-border rounded hover:bg-muted transition-colors"
+              className="border-border hover:bg-muted rounded border px-3 py-1.5 text-sm transition-colors"
             >
               {dict.pulls.next} →
             </Link>
