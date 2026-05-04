@@ -1,0 +1,4 @@
+# Revisions listed here are skipped by `git blame` when contributors opt in via:
+#   git config blame.ignoreRevsFile .git-blame-ignore-revs
+#
+# Add the squash-merge SHA of bulk reformat commits below (one per line).

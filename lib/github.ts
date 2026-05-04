@@ -1,5 +1,5 @@
 const BASE = "https://api.github.com";
-const PAT  = process.env.GITHUB_PAT!;
+const PAT = process.env.GITHUB_PAT!;
 
 const headers = {
   Authorization: `Bearer ${PAT}`,
@@ -24,7 +24,10 @@ export async function getRepo(owner: string, repo: string) {
 // Allowed repo list (from environment variables).
 export function getAllowedRepos(): { owner: string; repo: string }[] {
   const owner = process.env.GITHUB_OWNER!;
-  const repos = (process.env.GITHUB_REPOS ?? "").split(",").map((r) => r.trim()).filter(Boolean);
+  const repos = (process.env.GITHUB_REPOS ?? "")
+    .split(",")
+    .map((r) => r.trim())
+    .filter(Boolean);
   return repos.map((repo) => ({ owner, repo }));
 }
 
@@ -35,14 +38,17 @@ export async function getTree(owner: string, repo: string, ref = "HEAD") {
 
 // File contents.
 export async function getContents(owner: string, repo: string, path: string, ref = "HEAD") {
-  return ghFetch<GhContent>(
-    `repos/${owner}/${repo}/contents/${encodeURIComponent(path)}`,
-    { ref }
-  );
+  return ghFetch<GhContent>(`repos/${owner}/${repo}/contents/${encodeURIComponent(path)}`, { ref });
 }
 
 // Commit list. The `sha` param accepts a branch name or commit SHA.
-export async function getCommits(owner: string, repo: string, sha = "HEAD", perPage = 30, page = 1) {
+export async function getCommits(
+  owner: string,
+  repo: string,
+  sha = "HEAD",
+  perPage = 30,
+  page = 1,
+) {
   return ghFetch<GhCommit[]>(`repos/${owner}/${repo}/commits`, {
     sha,
     per_page: String(perPage),
@@ -56,7 +62,13 @@ export async function getBranches(owner: string, repo: string) {
 }
 
 // PR list.
-export async function getPulls(owner: string, repo: string, state: "open" | "closed" | "all" = "all", perPage = 30, page = 1) {
+export async function getPulls(
+  owner: string,
+  repo: string,
+  state: "open" | "closed" | "all" = "all",
+  perPage = 30,
+  page = 1,
+) {
   return ghFetch<GhPull[]>(`repos/${owner}/${repo}/pulls`, {
     state,
     per_page: String(perPage),

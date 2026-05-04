@@ -14,10 +14,7 @@ export default async function CodePage({ params, searchParams }: Props) {
   const { path: selectedPath, branch: branchParam } = await searchParams;
   const dict = await getDictionary(lang as Locale);
 
-  const [repoData, branches] = await Promise.all([
-    getRepo(owner, repo),
-    getBranches(owner, repo),
-  ]);
+  const [repoData, branches] = await Promise.all([getRepo(owner, repo), getBranches(owner, repo)]);
 
   const branchNames = branches.map((b) => b.name);
   const branch = branchNames.find((n) => n === branchParam) ?? repoData.default_branch;
@@ -39,13 +36,13 @@ export default async function CodePage({ params, searchParams }: Props) {
     >
       {selectedPath ? (
         <div>
-          <div className="px-4 py-2 border-b border-border bg-muted/40 text-sm font-mono text-muted-foreground">
+          <div className="border-border bg-muted/40 text-muted-foreground border-b px-4 py-2 font-mono text-sm">
             {selectedPath}
           </div>
           <CodeViewer owner={owner} repo={repo} path={selectedPath} branch={branch} />
         </div>
       ) : (
-        <div className="flex items-center justify-center h-full text-muted-foreground text-sm">
+        <div className="text-muted-foreground flex h-full items-center justify-center text-sm">
           {dict.code.selectFile}
         </div>
       )}

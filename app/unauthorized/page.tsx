@@ -35,11 +35,9 @@ export default function UnauthorizedPage() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen gap-4">
+    <div className="flex min-h-screen flex-col items-center justify-center gap-4">
       <p className="text-base font-semibold">Access restricted</p>
-      <p className="text-sm text-muted-foreground">
-        Enter your access token to continue.
-      </p>
+      <p className="text-muted-foreground text-sm">Enter your access token to continue.</p>
       <form onSubmit={handleSubmit} className="flex flex-col items-center gap-2">
         <div className="flex items-center gap-2">
           <input
@@ -48,21 +46,18 @@ export default function UnauthorizedPage() {
             placeholder="Access token"
             autoFocus
             onChange={() => setError(false)}
-            className="text-sm px-3 py-1.5 w-56 rounded border border-border bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-border"
+            className="border-border bg-background text-foreground placeholder:text-muted-foreground focus:ring-border w-56 rounded border px-3 py-1.5 text-sm focus:ring-1 focus:outline-none"
           />
           <button
             type="submit"
             disabled={submitting}
-            className="text-sm px-3 py-1.5 rounded border border-border bg-muted hover:bg-accent transition-colors cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+            className="border-border bg-muted hover:bg-accent cursor-pointer rounded border px-3 py-1.5 text-sm transition-colors disabled:cursor-not-allowed disabled:opacity-50"
           >
             Enter
           </button>
         </div>
         {/* Reserve space so the layout doesn't shift when the message toggles. */}
-        <p
-          aria-live="polite"
-          className={`text-sm text-red-500 ${error ? "visible" : "invisible"}`}
-        >
+        <p aria-live="polite" className={`text-sm text-red-500 ${error ? "visible" : "invisible"}`}>
           Invalid token. Please try again.
         </p>
       </form>

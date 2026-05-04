@@ -21,24 +21,22 @@ export default async function CommitDetailPage({ params }: Props) {
   const body = bodyLines.join("\n").trim();
 
   return (
-    <main className="flex-1 overflow-auto max-w-4xl mx-auto w-full px-6 py-6 space-y-5">
+    <main className="mx-auto w-full max-w-4xl flex-1 space-y-5 overflow-auto px-6 py-6">
       <Link
         href={`/${lang}/repository/${owner}/${repo}/commits`}
-        className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+        className="text-muted-foreground hover:text-foreground text-xs transition-colors"
       >
         ← {dict.commits.backToList}
       </Link>
 
       {/* Commit header. */}
-      <div className="border border-border rounded-lg p-4 space-y-3">
+      <div className="border-border space-y-3 rounded-lg border p-4">
         <div>
-          <p className="font-semibold text-base leading-snug">{title}</p>
-          {body && (
-            <p className="text-sm text-muted-foreground mt-2 whitespace-pre-wrap">{body}</p>
-          )}
+          <p className="text-base leading-snug font-semibold">{title}</p>
+          {body && <p className="text-muted-foreground mt-2 text-sm whitespace-pre-wrap">{body}</p>}
         </div>
 
-        <div className="flex items-center gap-2 pt-2 border-t border-border flex-wrap">
+        <div className="border-border flex flex-wrap items-center gap-2 border-t pt-2">
           {commit.author?.avatar_url ? (
             <Image
               src={commit.author.avatar_url}
@@ -48,12 +46,12 @@ export default async function CommitDetailPage({ params }: Props) {
               className="rounded-full"
             />
           ) : (
-            <div className="w-5 h-5 rounded-full bg-muted" />
+            <div className="bg-muted h-5 w-5 rounded-full" />
           )}
-          <span className="text-sm text-muted-foreground">
+          <span className="text-muted-foreground text-sm">
             {commit.commit.author.name} · {formatDate(commit.commit.author.date, lang)}
           </span>
-          <code className="ml-auto text-xs font-mono text-muted-foreground bg-muted px-2 py-1 rounded">
+          <code className="text-muted-foreground bg-muted ml-auto rounded px-2 py-1 font-mono text-xs">
             {commit.sha.slice(0, 7)}
           </code>
         </div>
@@ -61,14 +59,14 @@ export default async function CommitDetailPage({ params }: Props) {
 
       {/* Files changed. */}
       <div>
-        <h2 className="text-sm font-semibold mb-3">
+        <h2 className="mb-3 text-sm font-semibold">
           {dict.commits.filesChanged}
-          <span className="ml-2 font-normal text-muted-foreground">
-            {commit.files.length}{dict.commits.countSuffix}
+          <span className="text-muted-foreground ml-2 font-normal">
+            {commit.files.length}
+            {dict.commits.countSuffix}
           </span>
-          <span className="ml-2 text-xs font-mono font-normal">
-            <span className="text-green-600">+{commit.stats.additions}</span>
-            {" "}
+          <span className="ml-2 font-mono text-xs font-normal">
+            <span className="text-green-600">+{commit.stats.additions}</span>{" "}
             <span className="text-red-500">-{commit.stats.deletions}</span>
           </span>
         </h2>

@@ -14,8 +14,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="ko" suppressHydrationWarning>
       <head>
         {/* Prevent dark mode flash on page load. */}
-        <script dangerouslySetInnerHTML={{
-          __html: `
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
             try {
               const saved = localStorage.getItem("theme");
               const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -23,8 +24,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 document.documentElement.classList.add("dark");
               }
             } catch {}
-          `
-        }} />
+          `,
+          }}
+        />
       </head>
       <body className={inter.className}>{children}</body>
     </html>

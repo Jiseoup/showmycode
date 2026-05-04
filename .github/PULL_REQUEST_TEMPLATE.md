@@ -16,7 +16,10 @@ Closes #
 
 ## Checklist
 
-- [ ] `npm run build` passes
+- [ ] `npm run format:check` passes
 - [ ] `npm run lint` passes
-- [ ] New/updated strings added to both `dictionaries/ko.json` and `dictionaries/en.json` (if applicable)
+- [ ] `npm run typecheck` passes
+- [ ] `npm run build` passes
+- [ ] PR title follows Conventional Commits (`feat:`, `fix:`, `chore:`, `refactor:`, `docs:`, `test:`, `i18n:`)
+- [ ] New/updated strings added to both `locales/ko.json` and `locales/en.json` (if applicable)
 - [ ] Tests added for new functionality (if applicable)

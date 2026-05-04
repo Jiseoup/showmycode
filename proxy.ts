@@ -17,7 +17,7 @@ function redirectToLocale(request: NextRequest): NextResponse | undefined {
 
   // Pass through if locale prefix already present.
   const hasLocalePrefix = locales.some(
-    (l) => pathname === `/${l}` || pathname.startsWith(`/${l}/`)
+    (l) => pathname === `/${l}` || pathname.startsWith(`/${l}/`),
   );
   if (hasLocalePrefix) return;
 
