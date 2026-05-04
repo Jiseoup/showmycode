@@ -4,7 +4,7 @@ import { getPulls } from "@/lib/github";
 import { formatDate } from "@/lib/utils";
 import { getDictionary, type Locale } from "@/lib/i18n.server";
 
-const PER_PAGE = 30;
+const PER_PAGE = Number(process.env.PULLS_PER_PAGE) || 30;
 
 type Props = {
   params: Promise<{ lang: string; owner: string; repo: string }>;
