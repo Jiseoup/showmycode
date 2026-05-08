@@ -13,7 +13,9 @@
   "code": {
     "files": "Files",
     "branch": "Branch",
-    "selectFile": "Select a file from the left"
+    "selectFile": "Select a file from the left",
+    "expandAll": "Expand All",
+    "collapseAll": "Collapse All"
   },
   "commits": {
     "title": "Commit History",

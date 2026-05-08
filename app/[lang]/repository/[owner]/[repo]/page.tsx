@@ -28,7 +28,8 @@ export default async function CodePage({ params, searchParams }: Props) {
           repo={repo}
           selectedPath={selectedPath}
           lang={lang as Locale}
-          filesLabel={dict.code.files}
+          expandAllLabel={dict.code.expandAll}
+          collapseAllLabel={dict.code.collapseAll}
           branches={branchNames}
           branch={branch}
         />
