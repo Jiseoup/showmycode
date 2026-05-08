@@ -55,9 +55,9 @@ All pages are under `app/[lang]/` for internationalization (KO/EN). `proxy.ts` (
 ```
 /[lang]/                                              → Repository listing
 /[lang]/repository/[owner]/[repo]/                   → File tree + code viewer
-/[lang]/repository/[owner]/[repo]/commits/           → Commit history (paginated, default 50/page; configurable via COMMITS_PER_PAGE)
+/[lang]/repository/[owner]/[repo]/commits/           → Commit history (paginated, default 20/page; configurable via COMMITS_PER_PAGE)
 /[lang]/repository/[owner]/[repo]/commits/[sha]      → Commit detail (files changed + diff)
-/[lang]/repository/[owner]/[repo]/pulls/             → Pull request list (paginated, default 30/page; configurable via PULLS_PER_PAGE)
+/[lang]/repository/[owner]/[repo]/pulls/             → Pull request list (paginated, default 10/page; configurable via PULLS_PER_PAGE)
 /[lang]/repository/[owner]/[repo]/pulls/[number]     → PR detail (Overview / Commits / Files changed tabs)
 ```
 

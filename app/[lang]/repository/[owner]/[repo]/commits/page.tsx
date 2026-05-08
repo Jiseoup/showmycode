@@ -6,7 +6,7 @@ import { formatDate } from "@/lib/utils";
 import { getDictionary, type Locale } from "@/lib/i18n.server";
 import { BranchSelector } from "@/components/BranchSelector";
 
-const PER_PAGE = Number(process.env.COMMITS_PER_PAGE) || 50;
+const PER_PAGE = Number(process.env.COMMITS_PER_PAGE) || 20;
 
 type Props = {
   params: Promise<{ lang: string; owner: string; repo: string }>;
