@@ -4,8 +4,10 @@ import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
+const SITE_NAME = process.env.SITE_NAME || "showmycode";
+
 export const metadata: Metadata = {
-  title: "showmycode",
+  title: SITE_NAME,
   description: "Private repository viewer for interviewers",
 };
 
