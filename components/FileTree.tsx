@@ -227,9 +227,7 @@ export function FileTree({
               aria-hidden
             >
               <path fillRule="evenodd" clipRule="evenodd" d="M9 9H4v1h5V9z" />
-              {allExpanded && (
-                <path fillRule="evenodd" clipRule="evenodd" d="M7 12V7H6v5h1z" />
-              )}
+              {allExpanded && <path fillRule="evenodd" clipRule="evenodd" d="M7 12V7H6v5h1z" />}
               <path
                 fillRule="evenodd"
                 clipRule="evenodd"
