@@ -4,7 +4,7 @@ import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
-const SITE_NAME = process.env.SITE_NAME || "showmycode";
+const SITE_NAME = process.env.SITE_NAME || process.env.GITHUB_OWNER || "showmycode";
 
 export const metadata: Metadata = {
   title: SITE_NAME,

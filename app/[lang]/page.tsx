@@ -4,7 +4,7 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { LangSwitcher } from "@/components/LangSwitcher";
 import { getDictionary, type Locale } from "@/lib/i18n.server";
 
-const SITE_NAME = process.env.SITE_NAME || "showmycode";
+const SITE_NAME = process.env.SITE_NAME || process.env.GITHUB_OWNER || "showmycode";
 
 export default async function HomePage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
