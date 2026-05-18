@@ -31,7 +31,12 @@
     "modified": "modified",
     "renamed": "renamed",
     "foldAll": "Fold all",
-    "unfoldAll": "Unfold all"
+    "unfoldAll": "Unfold all",
+    "tree": {
+      "title": "Changed files",
+      "expandAll": "Expand all",
+      "collapseAll": "Collapse all"
+    }
   },
   "pulls": {
     "title": "Pull Requests",
@@ -57,7 +62,12 @@
     "tabCommits": "Commits",
     "tabFiles": "Files changed",
     "foldAll": "Fold all",
-    "unfoldAll": "Unfold all"
+    "unfoldAll": "Unfold all",
+    "tree": {
+      "title": "Changed files",
+      "expandAll": "Expand all",
+      "collapseAll": "Collapse all"
+    }
   },
   "error": {
     "title": "Failed to load data.",

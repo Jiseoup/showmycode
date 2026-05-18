@@ -3,7 +3,7 @@ import Image from "next/image";
 import { getCommit } from "@/lib/github";
 import { formatDate } from "@/lib/utils";
 import { getDictionary, type Locale } from "@/lib/i18n.server";
-import { FilesChanged } from "@/components/FilesChanged";
+import { FilesChangedWithTree } from "@/components/FilesChangedWithTree";
 
 type Props = {
   params: Promise<{ lang: string; owner: string; repo: string; sha: string }>;
@@ -21,7 +21,7 @@ export default async function CommitDetailPage({ params }: Props) {
   const body = bodyLines.join("\n").trim();
 
   return (
-    <main className="mx-auto w-full max-w-4xl flex-1 space-y-5 overflow-auto px-6 py-6">
+    <main className="mx-auto w-full max-w-6xl flex-1 space-y-5 overflow-auto px-6 py-6">
       <Link
         href={`/${lang}/repository/${owner}/${repo}/commits`}
         className="text-muted-foreground hover:text-foreground text-xs transition-colors"
@@ -71,7 +71,11 @@ export default async function CommitDetailPage({ params }: Props) {
           </span>
         </h2>
 
-        <FilesChanged files={commit.files} dict={dict.commits} />
+        <FilesChangedWithTree
+          files={commit.files}
+          diffDict={dict.commits}
+          treeDict={dict.commits.tree}
+        />
       </div>
     </main>
   );
