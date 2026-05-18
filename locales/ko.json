@@ -31,7 +31,12 @@
     "modified": "수정됨",
     "renamed": "이름 변경됨",
     "foldAll": "모두 접기",
-    "unfoldAll": "모두 펼치기"
+    "unfoldAll": "모두 펼치기",
+    "tree": {
+      "title": "변경된 파일",
+      "expandAll": "모두 펼치기",
+      "collapseAll": "모두 접기"
+    }
   },
   "pulls": {
     "title": "Pull Requests",
@@ -57,7 +62,12 @@
     "tabCommits": "Commits",
     "tabFiles": "Files changed",
     "foldAll": "모두 접기",
-    "unfoldAll": "모두 펼치기"
+    "unfoldAll": "모두 펼치기",
+    "tree": {
+      "title": "변경된 파일",
+      "expandAll": "모두 펼치기",
+      "collapseAll": "모두 접기"
+    }
   },
   "error": {
     "title": "데이터를 불러오지 못했습니다.",

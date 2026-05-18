@@ -3,7 +3,7 @@ import Image from "next/image";
 import { getPull, getPullFiles, getPullCommits } from "@/lib/github";
 import { formatDate } from "@/lib/utils";
 import { getDictionary, type Locale } from "@/lib/i18n.server";
-import { FilesChanged } from "@/components/FilesChanged";
+import { FilesChangedWithTree } from "@/components/FilesChangedWithTree";
 import { MarkdownBody } from "@/components/MarkdownBody";
 
 type Tab = "overview" | "commits" | "files";
@@ -69,7 +69,9 @@ export default async function PullDetailPage({ params, searchParams }: Props) {
   ];
 
   return (
-    <main className="mx-auto w-full max-w-4xl flex-1 space-y-5 overflow-auto px-6 py-6">
+    <main
+      className={`mx-auto w-full ${tab === "files" ? "max-w-6xl" : "max-w-4xl"} flex-1 space-y-5 overflow-auto px-6 py-6`}
+    >
       {/* Back link. */}
       <Link
         href={`/${lang}/repository/${owner}/${repo}/pulls`}
@@ -198,7 +200,9 @@ export default async function PullDetailPage({ params, searchParams }: Props) {
       )}
 
       {/* Files changed */}
-      {tab === "files" && files && <FilesChanged files={files} dict={dict.pulls} />}
+      {tab === "files" && files && (
+        <FilesChangedWithTree files={files} diffDict={dict.pulls} treeDict={dict.pulls.tree} />
+      )}
     </main>
   );
 }

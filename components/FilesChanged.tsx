@@ -105,7 +105,11 @@ export function FilesChanged({ files, dict }: { files: GhPullFile[]; dict: Dict 
         {files.map((file) => {
           const isFolded = !!folded[file.sha];
           return (
-            <div key={file.sha} className="border-border overflow-hidden rounded-lg border">
+            <div
+              key={file.sha}
+              id={`file-${file.sha}`}
+              className="border-border scroll-mt-4 overflow-hidden rounded-lg border"
+            >
               <button
                 onClick={() => toggle(file.sha)}
                 className="bg-muted/50 border-border hover:bg-muted flex w-full flex-wrap items-center gap-2 border-b px-4 py-2 text-left transition-colors"
