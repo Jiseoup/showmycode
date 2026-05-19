@@ -211,7 +211,7 @@ export function FilesChangedWithTree({ files, diffDict, treeDict }: Props) {
 
   return (
     <div className="flex gap-4 md:gap-6">
-      <aside className="sticky top-0 hidden max-h-[calc(100dvh-8rem)] w-64 shrink-0 self-start overflow-hidden md:flex md:flex-col">
+      <aside className="sticky top-0 hidden w-64 shrink-0 self-start md:flex md:flex-col">
         <div className="border-border flex items-center justify-between gap-2 border-b px-3 py-2">
           <span className="text-foreground truncate text-xs font-semibold tracking-wide uppercase">
             {treeDict.title}
@@ -240,7 +240,7 @@ export function FilesChangedWithTree({ files, diffDict, treeDict }: Props) {
             </svg>
           </button>
         </div>
-        <div className="flex-1 overflow-y-auto p-2">
+        <div className="p-2">
           <ul className="space-y-0.5 text-sm">
             {tree.map((node) => (
               <TreeRow
