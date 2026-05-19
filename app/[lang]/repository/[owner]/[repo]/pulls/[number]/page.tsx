@@ -70,7 +70,7 @@ export default async function PullDetailPage({ params, searchParams }: Props) {
 
   return (
     <main
-      className={`mx-auto w-full ${tab === "files" ? "max-w-6xl" : "max-w-4xl"} flex-1 space-y-5 overflow-auto px-6 py-6`}
+      className={`mx-auto w-full ${tab === "files" ? "max-w-7xl" : "max-w-4xl"} flex-1 space-y-5 overflow-auto px-6 py-6`}
     >
       {/* Back link. */}
       <Link
