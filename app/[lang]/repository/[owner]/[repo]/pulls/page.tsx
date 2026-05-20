@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { getPulls } from "@/lib/github";
-import { formatDate } from "@/lib/utils";
+import { formatDate, labelStyle } from "@/lib/utils";
 import { getDictionary, type Locale } from "@/lib/i18n.server";
 
 const PER_PAGE = Number(process.env.PULLS_PER_PAGE) || 10;
@@ -100,22 +100,15 @@ export default async function PullsPage({ params, searchParams }: Props) {
                     <span className="text-muted-foreground text-xs">
                       {pr.user.login} · {formatDate(pr.created_at, lang)}
                     </span>
-                    {pr.labels.map((l) => {
-                      const safeColor = /^[0-9a-fA-F]{6}$/.test(l.color) ? l.color : "8b949e";
-                      return (
-                        <span
-                          key={l.name}
-                          className="rounded px-1.5 py-0.5 text-xs"
-                          style={{
-                            background: `#${safeColor}33`,
-                            color: `#${safeColor}`,
-                            border: `1px solid #${safeColor}55`,
-                          }}
-                        >
-                          {l.name}
-                        </span>
-                      );
-                    })}
+                    {pr.labels.map((l) => (
+                      <span
+                        key={l.name}
+                        className="gh-label rounded px-1.5 py-0.5 text-xs"
+                        style={labelStyle(l.color)}
+                      >
+                        {l.name}
+                      </span>
+                    ))}
                   </div>
                 </div>
               </Link>

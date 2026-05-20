@@ -79,6 +79,21 @@
   user-select: none;
 }
 
+/* GitHub-style PR labels. Light mode uses the solid label color with a */
+/* readable black/white text picked in JS via WCAG luminance. Dark mode  */
+/* tints the same color into a low-alpha background to keep contrast.    */
+.gh-label {
+  background: var(--label);
+  color: var(--label-fg);
+  border: 1px solid var(--label);
+}
+
+.dark .gh-label {
+  background: color-mix(in srgb, var(--label) 20%, transparent);
+  color: var(--label);
+  border-color: color-mix(in srgb, var(--label) 33%, transparent);
+}
+
 /* Shiki dark mode. */
 .dark .shiki,
 .dark .shiki span {
