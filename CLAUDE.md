@@ -30,6 +30,10 @@ Copy `.env.example` to `.env.local` and fill in:
 - `GITHUB_PAT` — Fine-grained GitHub personal access token (read-only: Contents + Pull requests)
 - `GITHUB_OWNER` — GitHub username/org
 - `GITHUB_REPOS` — Comma-separated repository names to expose
+- `SITE_NAME` — (optional) Header/tab title; defaults to `GITHUB_OWNER`
+- `FILE_TREE_DEPTH` — (optional) File tree default expansion depth (`0` = all collapsed, default `0`)
+- `COMMITS_PER_PAGE` — (optional) Commits per page (default `20`, max `100`)
+- `PULLS_PER_PAGE` — (optional) Pull requests per page (default `10`, max `100`)
 
 ## Project Philosophy
 
@@ -90,7 +94,7 @@ The API route (`app/api/github/[...path]/route.ts`) validates that requested rep
 - **i18n** — `lib/i18n.server.ts` loads dictionaries server-side; `lib/i18n.ts` holds types and locale config
 - **Syntax highlighting** — `CodeViewer.tsx` uses Shiki with `github-light`/`github-dark` themes, switching based on the `dark` class on `<html>`. Line numbers are rendered via CSS counters on `.code-viewer code .line::before` in `globals.css`.
 - **Markdown rendering** — `MarkdownBody.tsx` uses `react-markdown` + `remark-gfm` with custom Tailwind-styled components (no `@tailwindcss/typography`). Use this component for any user-generated Markdown content.
-- **Diff view** — `FilesChanged.tsx` renders GitHub-style diffs with per-file and global fold/unfold. Accepts `GhPullFile[]` and a dict slice; reused across PR detail and commit detail pages.
+- **Diff view** — `FilesChanged.tsx` renders GitHub-style diffs with per-file and global fold/unfold, plus a changed-files tree sidebar for navigation. Accepts `GhPullFile[]` and a dict slice; reused across PR detail and commit detail pages.
 - **Pagination** — implemented via `?page=N` searchParams on server components; `hasNext` is inferred from `results.length === perPage` (GitHub API does not return total count).
 - **Styling** — Tailwind CSS v4 with class-based dark mode; CSS custom properties for theming; `lib/utils.ts` exports `cn()` (clsx + tailwind-merge). Use `px-3 md:px-6` (not bare `px-6`) for page-level horizontal padding.
 - **shadcn/ui** — configured in `components.json` (zinc base color, `@/` aliases, no `tailwind.config.ts` — Tailwind v4 config lives in `globals.css`). When adding a new shadcn component, also add the required CSS variables (`--popover`, `--popover-foreground`, `--input`, `--ring`, etc.) to both `:root` and `.dark` in `app/globals.css`, and map them in the `@theme inline` block. The shadcn CLI may not auto-inject these variables, so verify manually.
