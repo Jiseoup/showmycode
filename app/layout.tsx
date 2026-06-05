@@ -4,11 +4,9 @@ import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
-const SITE_NAME = process.env.SITE_NAME || process.env.GITHUB_OWNER || "showmycode";
-
 export const metadata: Metadata = {
-  title: SITE_NAME,
-  description: "Private repository viewer for interviewers",
+  title: "showmycode",
+  description: "Securely share private GitHub repositories with specific people.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

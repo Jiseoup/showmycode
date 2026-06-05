@@ -30,7 +30,7 @@ Copy `.env.example` to `.env.local` and fill in:
 - `GITHUB_PAT` — Fine-grained GitHub personal access token (read-only: Contents + Pull requests)
 - `GITHUB_OWNER` — GitHub username/org
 - `GITHUB_REPOS` — Comma-separated repository names to expose
-- `SITE_NAME` — (optional) Header/tab title; defaults to `GITHUB_OWNER`
+- `SHARE_TOKEN` — Access token for the share link; leave empty to block all access
 - `FILE_TREE_DEPTH` — (optional) File tree default expansion depth (`0` = all collapsed, default `0`)
 - `COMMITS_PER_PAGE` — (optional) Commits per page (default `20`, max `100`)
 - `PULLS_PER_PAGE` — (optional) Pull requests per page (default `10`, max `100`)
