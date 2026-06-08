@@ -1,6 +1,6 @@
 export default function PullDetailLoading() {
   return (
-    <main className="mx-auto w-full max-w-4xl flex-1 space-y-5 overflow-auto px-6 py-6">
+    <main className="mx-auto w-full max-w-4xl flex-1 space-y-5 overflow-auto px-3 py-6 md:px-6">
       {/* Back link skeleton. */}
       <div className="bg-muted h-3 w-24 animate-pulse rounded" />
 

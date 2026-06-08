@@ -21,7 +21,7 @@ export default async function CommitDetailPage({ params }: Props) {
   const body = bodyLines.join("\n").trim();
 
   return (
-    <main className="mx-auto w-full max-w-7xl flex-1 space-y-5 overflow-auto px-6 py-6">
+    <main className="mx-auto w-full max-w-7xl flex-1 space-y-5 overflow-auto px-3 py-6 md:px-6">
       <Link
         href={`/${lang}/repository/${owner}/${repo}/commits`}
         className="text-muted-foreground hover:text-foreground text-xs transition-colors"
