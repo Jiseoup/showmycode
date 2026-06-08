@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3b82f6"/>
+      <stop offset="1" stop-color="#8b5cf6"/>
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="14" fill="url(#g)"/>
+  <!-- Code brackets -->
+  <path d="M22 22 L12 32 L22 42" fill="none" stroke="#fafafa" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M42 22 L52 32 L42 42" fill="none" stroke="#fafafa" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Center: asterisk — like a masked password being shared, subtle "private" hint -->
+  <line x1="32" y1="25" x2="32" y2="39" stroke="#fafafa" stroke-width="3" stroke-linecap="round"/>
+  <line x1="26" y1="28.5" x2="38" y2="35.5" stroke="#fafafa" stroke-width="3" stroke-linecap="round"/>
+  <line x1="38" y1="28.5" x2="26" y2="35.5" stroke="#fafafa" stroke-width="3" stroke-linecap="round"/>
+</svg>
