@@ -5,7 +5,7 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { LangSwitcher } from "@/components/LangSwitcher";
 import { getDictionary, type Locale } from "@/lib/i18n.server";
 
-const SITE_NAME = process.env.SITE_NAME || process.env.GITHUB_OWNER || "showmycode";
+const OWNER = process.env.GITHUB_OWNER!;
 
 export default async function HomePage({ params }: { params: Promise<{ lang: string }> }) {
   const { lang } = await params;
@@ -19,7 +19,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
     <div className="bg-background min-h-screen">
       <header className="border-border flex items-center justify-between gap-2 border-b px-3 py-3 md:gap-4 md:px-6">
         <div className="flex min-w-0 items-center gap-2 overflow-hidden">
-          <BrandLink locale={locale} label={SITE_NAME} />
+          <BrandLink locale={locale} label={OWNER} />
         </div>
         <div className="flex items-center gap-3">
           <LangSwitcher currentLang={locale} />
