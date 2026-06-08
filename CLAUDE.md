@@ -67,11 +67,12 @@ All pages are under `app/[lang]/` for internationalization (KO/EN). `proxy.ts` (
 
 ### Access Control
 
-All pages are protected by a share token set in `SHARE_TOKEN` env var. The flow:
+All pages are protected by a share token set in `SHARE_TOKEN` env var. `proxy.ts` enforces it. There are two ways to authenticate:
 
-1. First visit: append `?token=<SHARE_TOKEN>` to any URL → middleware validates, sets a 30-day `httpOnly` cookie, redirects without the token in the URL.
-2. Subsequent visits: cookie is checked automatically.
-3. Invalid/missing token → redirected to `/unauthorized` (token entry page).
+1. **Shared URL** — append `?token=<SHARE_TOKEN>` to any URL → `proxy.ts` validates, sets a 30-day `httpOnly` cookie (`smc_auth`), and redirects without the token in the URL.
+2. **Manual entry** — the `/unauthorized` page POSTs the token to `app/api/auth/route.ts`, which sets the same cookie on success.
+
+Subsequent visits reuse the cookie automatically. An invalid/missing token redirects to `/unauthorized` (token entry page).
 
 If `SHARE_TOKEN` is not set, all access is blocked. The token is never exposed to the client.
 
@@ -89,13 +90,14 @@ The API route (`app/api/github/[...path]/route.ts`) validates that requested rep
 
 ### Key Patterns
 
-- **Server Components by default** — pages use `async` components for data fetching; interactive components (`FileTree.tsx`, `LangSwitcher.tsx`, `ThemeToggle.tsx`, `FilesChanged.tsx`, `SidebarDrawer.tsx`, `BranchSelector.tsx`) are `"use client"`
+- **Server Components by default** — pages use `async` components for data fetching; interactive components (`FileTree.tsx`, `LangSwitcher.tsx`, `ThemeToggle.tsx`, `FilesChanged.tsx`, `FilesChangedWithTree.tsx`, `SidebarDrawer.tsx`, `BranchSelector.tsx`) are `"use client"`
 - **Mobile layout** — all pages must be usable on mobile (≥ 320px). Use `md:` breakpoint prefix for desktop-only styles. The sidebar is hidden on mobile and toggled via `SidebarDrawer.tsx`, which accepts the server-rendered `<Sidebar>` as a prop — this is the App Router pattern for mixing server and client components. Do not add new fixed-width layout elements without a responsive fallback.
 - **i18n** — `lib/i18n.server.ts` loads dictionaries server-side; `lib/i18n.ts` holds types and locale config
 - **Syntax highlighting** — `CodeViewer.tsx` uses Shiki with `github-light`/`github-dark` themes, switching based on the `dark` class on `<html>`. Line numbers are rendered via CSS counters on `.code-viewer code .line::before` in `globals.css`.
 - **Markdown rendering** — `MarkdownBody.tsx` uses `react-markdown` + `remark-gfm` with custom Tailwind-styled components (no `@tailwindcss/typography`). Use this component for any user-generated Markdown content.
-- **Diff view** — `FilesChanged.tsx` renders GitHub-style diffs with per-file and global fold/unfold, plus a changed-files tree sidebar for navigation. Accepts `GhPullFile[]` and a dict slice; reused across PR detail and commit detail pages.
+- **Diff view** — `FilesChanged.tsx` renders GitHub-style diffs with per-file and global fold/unfold; it accepts `GhPullFile[]` and a dict slice. `FilesChangedWithTree.tsx` wraps it with a changed-files tree sidebar for navigation, and is what the PR detail and commit detail pages actually import.
 - **Loading UI** — every data-fetching route has a co-located `loading.tsx` with `animate-pulse` skeletons matching the page layout to minimize CLS.
+- **Error UI** — `app/global-error.tsx` is the root error boundary; `app/[lang]/repository/[owner]/[repo]/error.tsx` catches errors within the repository view. Both are `"use client"` per the App Router convention.
 - **Pagination** — implemented via `?page=N` searchParams on server components; `hasNext` is inferred from `results.length === perPage` (GitHub API does not return total count).
 - **Styling** — Tailwind CSS v4 with class-based dark mode; CSS custom properties for theming; `lib/utils.ts` exports `cn()` (clsx + tailwind-merge). Use `px-3 md:px-6` (not bare `px-6`) for page-level horizontal padding.
 - **shadcn/ui** — configured in `components.json` (zinc base color, `@/` aliases, no `tailwind.config.ts` — Tailwind v4 config lives in `globals.css`). When adding a new shadcn component, also add the required CSS variables (`--popover`, `--popover-foreground`, `--input`, `--ring`, etc.) to both `:root` and `.dark` in `app/globals.css`, and map them in the `@theme inline` block. The shadcn CLI may not auto-inject these variables, so verify manually.
