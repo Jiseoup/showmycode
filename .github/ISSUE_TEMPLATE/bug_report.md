@@ -1,35 +1,28 @@
 ---
 name: Bug Report
 about: Report a bug to help us improve
-title: "fix: "
-labels: bug
+title: ""
+labels: fix
 ---
 
 ## Description
 
-<!-- A clear description of the bug -->
+<!-- A clear and concise description of the bug. -->
 
 ## Steps to Reproduce
 
 1.
 2.
-3.
 
-## Expected Behavior
+## Expected vs Actual
 
-<!-- What should happen -->
-
-## Actual Behavior
-
-<!-- What actually happens -->
-
-## Environment
-
-- OS:
-- Browser:
-- Node.js version:
-- showmycode version/commit:
+<!-- What you expected to happen, and what actually happened. -->
 
 ## Screenshots
 
-<!-- If applicable -->
+<!-- If applicable, add screenshots to help explain the problem. -->
+
+## Environment
+
+- Browser:
+- OS:

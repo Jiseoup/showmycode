@@ -1,22 +1,18 @@
 ---
 name: Feature Request
 about: Suggest a new feature or improvement
-title: "feat: "
-labels: enhancement
+title: ""
+labels: feat
 ---
 
 ## Problem
 
-<!-- What problem does this solve? -->
+<!-- What problem does this solve? Why is it needed? -->
 
 ## Proposed Solution
 
-<!-- How should it work? -->
+<!-- How should it work? Include mockups or examples if possible. -->
 
 ## Alternatives Considered
 
-<!-- Any other approaches you've thought about? -->
-
-## Additional Context
-
-<!-- Mockups, examples, references, etc. -->
+<!-- Any other approaches you've thought about? Skip if none. -->
