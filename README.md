@@ -123,4 +123,4 @@ http://localhost:3000 에서 확인할 수 있습니다.
 
 - [ ] 데모 사이트 배포 후 README에 링크 추가
 - [ ] 스크린샷 또는 GIF 데모 추가
-- [ ] GitHub Actions CI 설정 (빌드 자동 검증)
+- [x] GitHub Actions CI 설정 (빌드 자동 검증)

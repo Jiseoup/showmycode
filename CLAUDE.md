@@ -48,7 +48,7 @@ This is an **open-source project** that accepts external contributions. All impl
 
 - **Branch strategy** — GitHub Flow. Work on feature branches (`feat/`, `fix/`, `chore/`, `refactor/`, `docs/`, `i18n/`) and merge via PR to `main`. Enforced locally by the `pre-push` hook.
 - **Commit messages** — Conventional Commits (`feat:`, `fix:`, `chore:`, `refactor:`, `docs:`, `i18n:`). Enforced locally by the `commit-msg` hook.
-- **PR discipline** — Squash and merge. Every PR must pass CI (build + lint) and receive at least one review.
+- **PR discipline** — Squash and merge. Every PR must pass CI (format · lint · typecheck · build) and receive at least one review.
 - **Code quality** — No PR without passing checks. This project intentionally has no test suite — verify changes manually.
 - **Documentation** — User-facing changes should update relevant docs. Keep CONTRIBUTING.md and Issue/PR templates current.
 - **i18n** — All user-facing strings must support KO/EN. Never hardcode display text.
