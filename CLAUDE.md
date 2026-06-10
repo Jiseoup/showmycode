@@ -21,7 +21,14 @@ npm run typecheck     # Run tsc --noEmit
 
 No test framework is configured.
 
-Coding conventions and the full toolchain rationale live in [CONTRIBUTING.md](CONTRIBUTING.md#code-conventions).
+## Git Hooks
+
+Native git hooks live in `.githooks/` and are activated by the `prepare` npm script (`git config core.hooksPath .githooks`), which runs automatically on `npm install`:
+
+- `commit-msg` — rejects commits whose subject line does not start with `feat:`, `fix:`, `chore:`, `refactor:`, `docs:`, or `i18n:` (scopes like `feat(api):` are allowed)
+- `pre-push` — rejects pushes of branches not named `main` or prefixed with `feat/`, `fix/`, `chore/`, `refactor/`, `docs/`, or `i18n/`
+
+No husky/commitlint — these are plain shell scripts with zero dependencies. Hook filenames are fixed by git; keep them executable.
 
 ## Environment Setup
 
@@ -39,10 +46,10 @@ Copy `.env.example` to `.env.local` and fill in:
 
 This is an **open-source project** that accepts external contributions. All implementation decisions must follow open-source best practices:
 
-- **Branch strategy** — GitHub Flow. Work on feature branches (`feat/`, `fix/`, `chore/`, `refactor/`, `docs/`, `test/`, `i18n/`) and merge via PR to `main`.
-- **Commit messages** — Conventional Commits (`feat:`, `fix:`, `chore:`, `refactor:`, `docs:`, `test:`, `i18n:`).
-- **PR discipline** — Squash and merge. Every PR must pass CI (build + lint + test) and receive at least one review.
-- **Code quality** — No PR without passing checks. Add tests for new features when a test framework is in place.
+- **Branch strategy** — GitHub Flow. Work on feature branches (`feat/`, `fix/`, `chore/`, `refactor/`, `docs/`, `i18n/`) and merge via PR to `main`. Enforced locally by the `pre-push` hook.
+- **Commit messages** — Conventional Commits (`feat:`, `fix:`, `chore:`, `refactor:`, `docs:`, `i18n:`). Enforced locally by the `commit-msg` hook.
+- **PR discipline** — Squash and merge. Every PR must pass CI (build + lint) and receive at least one review.
+- **Code quality** — No PR without passing checks. This project intentionally has no test suite — verify changes manually.
 - **Documentation** — User-facing changes should update relevant docs. Keep CONTRIBUTING.md and Issue/PR templates current.
 - **i18n** — All user-facing strings must support KO/EN. Never hardcode display text.
 

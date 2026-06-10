@@ -1,0 +1,23 @@
+#!/bin/sh
+# Enforce branch naming on push: feat/, fix/, chore/, refactor/, docs/, i18n/.
+# `main` is allowed so maintainers can push merge results.
+# Activated by `git config core.hooksPath .githooks` (run via the `prepare` npm script).
+
+pattern='^refs/heads/((feat|fix|chore|refactor|docs|i18n)/.+|main)$'
+zero=$(printf '0%.0s' $(seq 40))
+
+while read -r local_ref local_sha remote_ref remote_sha; do
+  # Skip branch deletions and tag pushes.
+  [ "$local_sha" = "$zero" ] && continue
+  case "$remote_ref" in refs/tags/*) continue ;; esac
+
+  if ! printf '%s' "$remote_ref" | grep -qE "$pattern"; then
+    branch=${remote_ref#refs/heads/}
+    echo "✖ Branch name '$branch' must start with one of: feat/, fix/, chore/, refactor/, docs/, i18n/"
+    echo "  e.g.  feat/repo-search"
+    echo "  Rename with:  git branch -m $branch <prefix>/$branch"
+    exit 1
+  fi
+done
+
+exit 0
