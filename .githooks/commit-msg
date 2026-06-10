@@ -1,0 +1,14 @@
+#!/bin/sh
+# Enforce a Conventional Commits prefix on the commit subject line.
+# Activated by `git config core.hooksPath .githooks`, which the `prepare`
+# npm script runs automatically on `npm install`.
+
+subject=$(head -n 1 "$1")
+pattern='^(feat|fix|chore|refactor|docs|i18n)(\(.+\))?!?: .+'
+
+if ! printf '%s' "$subject" | grep -qE "$pattern"; then
+  echo "✖ Commit message must start with one of: feat:, fix:, chore:, refactor:, docs:, i18n:"
+  echo "  e.g.  feat: add repository search"
+  echo "  Got:  $subject"
+  exit 1
+fi
