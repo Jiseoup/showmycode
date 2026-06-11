@@ -74,6 +74,16 @@ export function proxy(request: NextRequest) {
   return NextResponse.redirect(new URL("/unauthorized", request.url));
 }
 
+/**
+ * Run the proxy on every page route, excluding only framework internals and named static assets.
+ *
+ * Dotted paths are intentionally not excluded:
+ * repository names can contain dots (e.g. `next.js`),
+ * so a blanket `.*\..*` rule would let those repo pages bypass the share-token check.
+ *
+ * When adding files to `public/` (e.g. robots.txt, og images),
+ * list them here — otherwise they hit the auth gate and locale redirect.
+ */
 export const config = {
-  matcher: ["/((?!_next|api|.*\\..*).*)"],
+  matcher: ["/((?!_next/static|_next/image|api|favicon.ico|icon.svg).*)"],
 };

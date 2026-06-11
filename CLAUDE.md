@@ -65,7 +65,7 @@ All pages are under `app/[lang]/` for internationalization (KO/EN). `proxy.ts` (
 
 ```
 /[lang]/                                              → Repository listing
-/[lang]/repository/[owner]/[repo]/                   → File tree + code viewer
+/[lang]/repository/[owner]/[repo]/                   → File tree + code viewer (?path= selects a file, ?branch= switches branch via BranchSelector)
 /[lang]/repository/[owner]/[repo]/commits/           → Commit history (paginated, default 20/page; configurable via COMMITS_PER_PAGE)
 /[lang]/repository/[owner]/[repo]/commits/[sha]      → Commit detail (files changed + diff)
 /[lang]/repository/[owner]/[repo]/pulls/             → Pull request list (paginated, default 10/page; configurable via PULLS_PER_PAGE)
@@ -83,17 +83,19 @@ Subsequent visits reuse the cookie automatically. An invalid/missing token redir
 
 If `SHARE_TOKEN` is not set, all access is blocked. The token is never exposed to the client.
 
+Note: the `proxy.ts` matcher excludes `/api/*`, framework internals (`_next/static`, `_next/image`), and known static assets by name (`favicon.ico`, `icon.svg`) — API routes are NOT covered by the share-token check and must enforce their own auth. Currently the only API route is `/api/auth`, which is intentionally public (it is the token-entry endpoint). The matcher deliberately does NOT exclude dotted paths (`.*\..*`): repository names can contain dots (e.g. `next.js`), and a blanket dot-exclusion would let those repo pages bypass auth. If you add files to `public/`, add them to the matcher exclusion list or they will hit the auth gate.
+
 ### GitHub API Security Model
 
-The GitHub PAT never reaches the client. All GitHub API calls go through a server-side proxy:
+The GitHub PAT never reaches the client. All GitHub API calls happen server-side — pages are Server Components that call the typed fetch helpers in `lib/github.ts` directly:
 
 ```
-Client → /api/github/[...path] → GitHub API (with PAT from env)
+Server Component → lib/github.ts → GitHub API (with PAT from env)
 ```
 
-The API route (`app/api/github/[...path]/route.ts`) validates that requested repos are in the `GITHUB_REPOS` allowlist before proxying.
+There is no client-facing GitHub proxy route; do not add one without share-token auth (`proxy.ts` does not cover `/api/*` — see Access Control). The repository layout (`app/[lang]/repository/[owner]/[repo]/layout.tsx`) validates `owner`/`repo` against the `GITHUB_REPOS` allowlist (`getAllowedRepos()`) and 404s anything else.
 
-`lib/github.ts` provides typed fetch helpers used by server components and the API route.
+GitHub responses are cached for 60 seconds via `next: { revalidate: 60 }` in `ghFetch` (`lib/github.ts`) — data shown to viewers may be up to a minute stale.
 
 ### Key Patterns
 
