@@ -4,7 +4,7 @@
 # npm script runs automatically on `npm install`.
 
 subject=$(head -n 1 "$1")
-pattern='^(feat|fix|chore|refactor|docs|i18n)(\(.+\))?!?: .+'
+pattern='^(feat|fix|chore|refactor|docs|i18n)(\(.+\))?: .+'
 
 if ! printf '%s' "$subject" | grep -qE "$pattern"; then
   echo "✖ Commit message must start with one of: feat:, fix:, chore:, refactor:, docs:, i18n:"
