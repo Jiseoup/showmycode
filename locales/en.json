@@ -72,5 +72,12 @@
   "error": {
     "title": "Failed to load data.",
     "retry": "Try again"
+  },
+  "unauthorized": {
+    "title": "Access restricted",
+    "description": "Enter your access token to continue.",
+    "placeholder": "Access token",
+    "submit": "Enter",
+    "invalid": "Invalid token. Please try again."
   }
 }

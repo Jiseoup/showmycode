@@ -72,5 +72,12 @@
   "error": {
     "title": "데이터를 불러오지 못했습니다.",
     "retry": "다시 시도"
+  },
+  "unauthorized": {
+    "title": "접근이 제한되었습니다",
+    "description": "계속하려면 액세스 토큰을 입력하세요.",
+    "placeholder": "액세스 토큰",
+    "submit": "입력",
+    "invalid": "유효하지 않은 토큰입니다. 다시 시도하세요."
   }
 }
