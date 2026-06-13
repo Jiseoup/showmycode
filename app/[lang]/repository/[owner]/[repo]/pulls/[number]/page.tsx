@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { getPull, getPullFiles, getPullCommits } from "@/lib/github";
@@ -45,6 +46,7 @@ export default async function PullDetailPage({ params, searchParams }: Props) {
   const { lang, owner, repo, number } = await params;
   const { tab: tabParam } = await searchParams;
   const prNumber = parseInt(number, 10);
+  if (isNaN(prNumber)) notFound();
 
   const tab: Tab = tabParam === "commits" ? "commits" : tabParam === "files" ? "files" : "overview";
 

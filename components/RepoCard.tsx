@@ -88,7 +88,7 @@ export function RepoCard({
 
         {/* Private/Public badge. */}
         <span className="border-border text-muted-foreground shrink-0 rounded-full border px-2 py-0.5 text-xs">
-          {repo.private ? "Private" : "Public"}
+          {repo.private ? dict.private : dict.public}
         </span>
       </div>
     </Link>
