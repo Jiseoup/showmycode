@@ -7,7 +7,7 @@ Share a single link with interviewers, collaborators, or reviewers, and they can
 
 **[Live Demo](https://showmycode.vercel.app)**
 
-<video src="https://github.com/user-attachments/assets/23d865a5-7266-4e27-a89a-6c39ee430f49" autoplay loop muted playsinline></video>
+![demo](media/demo.gif)
 
 ## Features
 
