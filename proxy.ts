@@ -1,8 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { locales, defaultLocale, hasLocale } from "@/lib/i18n";
-
-const COOKIE_NAME = "smc_auth";
+import { COOKIE_NAME, verifyToken, verifyCookie, cookieValue } from "@/lib/auth";
 
 // Paths that are accessible without a valid auth cookie.
 const PUBLIC_PATHS = ["/unauthorized"];
@@ -47,11 +46,11 @@ export function proxy(request: NextRequest) {
   // This allows sharing a plain URL like https://example.com/?token=xxx.
   const queryToken = request.nextUrl.searchParams.get("token");
   if (queryToken !== null) {
-    if (queryToken === token) {
+    if (verifyToken(queryToken, token)) {
       const url = new URL(request.url);
       url.searchParams.delete("token");
       const response = NextResponse.redirect(url);
-      response.cookies.set(COOKIE_NAME, token, {
+      response.cookies.set(COOKIE_NAME, cookieValue(token), {
         httpOnly: true,
         sameSite: "lax",
         secure: process.env.NODE_ENV === "production",
@@ -66,7 +65,7 @@ export function proxy(request: NextRequest) {
 
   // Check auth cookie for subsequent requests.
   const cookie = request.cookies.get(COOKIE_NAME);
-  if (cookie?.value === token) {
+  if (cookie?.value && verifyCookie(cookie.value, token)) {
     return redirectToLocale(request) ?? NextResponse.next();
   }
 
