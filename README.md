@@ -36,15 +36,15 @@ Copy `.env.example` to `.env.local` and fill in the values:
 cp .env.example .env.local
 ```
 
-| Variable | Description | Required | Default |
-| --- | --- | --- | --- |
-| `GITHUB_PAT` | Fine-grained GitHub personal access token (read-only) | Yes | — |
-| `GITHUB_OWNER` | GitHub username or organization | Yes | — |
-| `GITHUB_REPOS` | Comma-separated repository names to expose | Yes | — |
-| `FILE_TREE_DEPTH` | File tree default expansion depth (`0` = all collapsed) | No | `0` |
-| `COMMITS_PER_PAGE` | Commits per page (max `100`) | No | `20` |
-| `PULLS_PER_PAGE` | Pull requests per page (max `100`) | No | `10` |
-| `SHARE_TOKEN` | Access token for the share link (leave empty for public mode) | No | — |
+| Variable           | Description                                                   | Required | Default |
+| ------------------ | ------------------------------------------------------------- | -------- | ------- |
+| `GITHUB_PAT`       | Fine-grained GitHub personal access token (read-only)         | Yes      | —       |
+| `GITHUB_OWNER`     | GitHub username or organization                               | Yes      | —       |
+| `GITHUB_REPOS`     | Comma-separated repository names to expose                    | Yes      | —       |
+| `FILE_TREE_DEPTH`  | File tree default expansion depth (`0` = all collapsed)       | No       | `0`     |
+| `COMMITS_PER_PAGE` | Commits per page (max `100`)                                  | No       | `20`    |
+| `PULLS_PER_PAGE`   | Pull requests per page (max `100`)                            | No       | `10`    |
+| `SHARE_TOKEN`      | Access token for the share link (leave empty for public mode) | No       | —       |
 
 ### Creating a GitHub PAT
 
