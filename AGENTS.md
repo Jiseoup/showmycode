@@ -87,6 +87,8 @@ Subsequent visits reuse the cookie automatically. An invalid/missing token redir
 
 If `SHARE_TOKEN` is not set, all access is blocked. The token is never exposed to the client.
 
+Token comparison uses `crypto.timingSafeEqual` (via `lib/auth.ts`) to prevent timing attacks. The auth cookie stores an HMAC-SHA256 digest of the token — not the raw value — so a leaked cookie does not directly reveal the share token. Auth helpers (`verifyToken`, `verifyCookie`, `cookieValue`) live in `lib/auth.ts`. All token comparisons must go through this module — never use `===` for secret comparison.
+
 Note: the `proxy.ts` matcher excludes `/api/*`, framework internals (`_next/static`, `_next/image`), and known static assets by name (`favicon.ico`, `icon.svg`) — API routes are NOT covered by the share-token check and must enforce their own auth. Currently the only API route is `/api/auth`, which is intentionally public (it is the token-entry endpoint). The matcher deliberately does NOT exclude dotted paths (`.*\..*`): repository names can contain dots (e.g. `next.js`), and a blanket dot-exclusion would let those repo pages bypass auth. If you add files to `public/`, add them to the matcher exclusion list or they will hit the auth gate.
 
 ### GitHub API Security Model
