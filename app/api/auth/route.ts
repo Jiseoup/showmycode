@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-
-const COOKIE_NAME = "smc_auth";
+import { COOKIE_NAME, verifyToken, cookieValue } from "@/lib/auth";
 
 // Validates a share token submitted from the unauthorized page.
 // On success, sets the auth cookie; on failure, returns 401 without leaking details.
@@ -19,12 +18,12 @@ export async function POST(request: NextRequest) {
     // Invalid JSON body — treat as failed auth.
   }
 
-  if (!submitted || submitted !== expected) {
+  if (!submitted || !verifyToken(submitted, expected)) {
     return NextResponse.json({ ok: false }, { status: 401 });
   }
 
   const response = NextResponse.json({ ok: true });
-  response.cookies.set(COOKIE_NAME, expected, {
+  response.cookies.set(COOKIE_NAME, cookieValue(expected), {
     httpOnly: true,
     sameSite: "lax",
     secure: process.env.NODE_ENV === "production",
