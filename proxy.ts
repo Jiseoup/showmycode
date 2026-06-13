@@ -37,9 +37,9 @@ export function proxy(request: NextRequest) {
 
   const token = process.env.SHARE_TOKEN;
 
-  // If SHARE_TOKEN is not set, block all access to prevent accidental exposure.
+  // If SHARE_TOKEN is not set, run in public mode (no auth required).
   if (!token) {
-    return NextResponse.redirect(new URL("/unauthorized", request.url));
+    return redirectToLocale(request) ?? NextResponse.next();
   }
 
   // If ?token= query param is present and valid, set auth cookie and redirect without the param.
