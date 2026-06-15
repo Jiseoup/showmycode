@@ -41,15 +41,15 @@
 cp .env.example .env.local
 ```
 
-| 변수명             | 설명                                                   | 필수 | 기본값 |
-| ------------------ | ------------------------------------------------------ | ---- | ------ |
-| `GITHUB_PAT`       | Fine-grained GitHub 개인 액세스 토큰 (읽기 전용)       | Yes  | —      |
-| `GITHUB_OWNER`     | GitHub 사용자명 또는 조직명                             | Yes  | —      |
-| `GITHUB_REPOS`     | 노출할 레포지토리 이름 (쉼표로 구분)                    | Yes  | —      |
-| `FILE_TREE_DEPTH`  | 파일 트리 기본 펼침 깊이 (`0` = 모두 접힘)              | No   | `0`    |
-| `COMMITS_PER_PAGE` | 페이지당 커밋 수 (최대 `100`)                           | No   | `20`   |
-| `PULLS_PER_PAGE`   | 페이지당 풀 리퀘스트 수 (최대 `100`)                    | No   | `10`   |
-| `SHARE_TOKEN`      | 공유 링크 접근 토큰 (비우면 공개 모드)                  | No   | —      |
+| 변수명             | 설명                                             | 필수 | 기본값 |
+| ------------------ | ------------------------------------------------ | ---- | ------ |
+| `GITHUB_PAT`       | Fine-grained GitHub 개인 액세스 토큰 (읽기 전용) | Yes  | —      |
+| `GITHUB_OWNER`     | GitHub 사용자명 또는 조직명                      | Yes  | —      |
+| `GITHUB_REPOS`     | 노출할 레포지토리 이름 (쉼표로 구분)             | Yes  | —      |
+| `FILE_TREE_DEPTH`  | 파일 트리 기본 펼침 깊이 (`0` = 모두 접힘)       | No   | `0`    |
+| `COMMITS_PER_PAGE` | 페이지당 커밋 수 (최대 `100`)                    | No   | `20`   |
+| `PULLS_PER_PAGE`   | 페이지당 풀 리퀘스트 수 (최대 `100`)             | No   | `10`   |
+| `SHARE_TOKEN`      | 공유 링크 접근 토큰 (비우면 공개 모드)           | No   | —      |
 
 ### 🔑 GitHub PAT 발급 방법
 
