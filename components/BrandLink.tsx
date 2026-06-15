@@ -2,13 +2,13 @@ import Link from "next/link";
 import type { Locale } from "@/lib/i18n.server";
 
 type Props = {
-  /** Locale segment the home link should point to. */
+  // Locale segment the home link should point to.
   locale: Locale;
-  /** Text shown next to the logo (site name on home, owner on repo pages). */
+  // Text shown next to the logo (site name on home, owner on repo pages).
   label: string;
 };
 
-/** GitHub logo + label linking back to the home page, focused as a single unit. */
+// GitHub logo + label linking back to the home page, focused as a single unit.
 export function BrandLink({ locale, label }: Props) {
   return (
     <Link

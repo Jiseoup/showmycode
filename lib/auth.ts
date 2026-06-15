@@ -14,17 +14,17 @@ function safeEqual(a: string, b: string): boolean {
   return timingSafeEqual(Buffer.from(a), Buffer.from(b));
 }
 
-/** Constant-time comparison of a submitted token against the expected SHARE_TOKEN. */
+// Constant-time comparison of a submitted token against the expected SHARE_TOKEN.
 export function verifyToken(submitted: string, expected: string): boolean {
   return safeEqual(submitted, expected);
 }
 
-/** Value to store in the auth cookie (HMAC of the token, not the raw token). */
+// Value to store in the auth cookie (HMAC of the token, not the raw token).
 export function cookieValue(token: string): string {
   return hmacSign(token);
 }
 
-/** Check whether a cookie value is valid for the given SHARE_TOKEN. */
+// Check whether a cookie value is valid for the given SHARE_TOKEN.
 export function verifyCookie(value: string, token: string): boolean {
   return safeEqual(value, hmacSign(token));
 }
