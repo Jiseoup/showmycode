@@ -12,13 +12,7 @@ type Props = {
   invalid: string;
 };
 
-export default function UnauthorizedForm({
-  title,
-  description,
-  placeholder,
-  submit,
-  invalid,
-}: Props) {
+export function UnauthorizedForm({ title, description, placeholder, submit, invalid }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [error, setError] = useState(false);
   const [submitting, setSubmitting] = useState(false);

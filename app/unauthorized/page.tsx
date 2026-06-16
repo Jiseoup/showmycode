@@ -1,6 +1,6 @@
 import { headers } from "next/headers";
 import { getDictionary, defaultLocale, hasLocale } from "@/lib/i18n.server";
-import UnauthorizedForm from "@/components/UnauthorizedForm";
+import { UnauthorizedForm } from "@/components/UnauthorizedForm";
 
 // Standalone page — outside the [lang] layout, so there is no locale param.
 // Resolve the locale from Accept-Language, mirroring proxy.ts.
