@@ -2,18 +2,17 @@
   "nav": {
     "code": "코드",
     "commits": "커밋",
-    "pulls": "PR"
+    "pulls": "풀 리퀘스트"
   },
   "repo": {
     "private": "Private",
     "public": "Public",
     "noDescription": "설명 없음",
-    "updated": "업데이트"
+    "updated": "마지막 업데이트"
   },
   "code": {
     "files": "파일",
-    "branch": "브랜치",
-    "selectFile": "왼쪽에서 파일을 선택하세요",
+    "selectFile": "파일을 선택하세요",
     "expandAll": "모두 펼치기",
     "collapseAll": "모두 접기"
   },
@@ -26,10 +25,10 @@
     "backToList": "목록으로",
     "filesChanged": "변경된 파일",
     "binaryFile": "바이너리 파일",
-    "added": "추가됨",
-    "removed": "삭제됨",
-    "modified": "수정됨",
-    "renamed": "이름 변경됨",
+    "added": "Added",
+    "removed": "Removed",
+    "modified": "Modified",
+    "renamed": "Renamed",
     "foldAll": "모두 접기",
     "unfoldAll": "모두 펼치기",
     "tree": {
@@ -39,9 +38,9 @@
     }
   },
   "pulls": {
-    "title": "Pull Requests",
+    "title": "풀 리퀘스트",
     "countSuffix": "개",
-    "empty": "PR이 없습니다.",
+    "empty": "풀 리퀘스트가 없습니다.",
     "merged": "Merged",
     "open": "Open",
     "closed": "Closed",
@@ -50,17 +49,14 @@
     "next": "다음",
     "backToList": "목록으로",
     "noBody": "설명 없음",
-    "filesChanged": "변경된 파일",
-    "additions": "추가",
-    "deletions": "삭제",
     "binaryFile": "바이너리 파일",
-    "added": "추가됨",
-    "removed": "삭제됨",
-    "modified": "수정됨",
-    "renamed": "이름 변경됨",
-    "tabOverview": "Overview",
-    "tabCommits": "Commits",
-    "tabFiles": "Files changed",
+    "added": "Added",
+    "removed": "Removed",
+    "modified": "Modified",
+    "renamed": "Renamed",
+    "tabOverview": "개요",
+    "tabCommits": "커밋",
+    "tabFiles": "변경된 파일",
     "foldAll": "모두 접기",
     "unfoldAll": "모두 펼치기",
     "tree": {
@@ -77,7 +73,7 @@
     "title": "접근이 제한되었습니다",
     "description": "계속하려면 액세스 토큰을 입력하세요.",
     "placeholder": "액세스 토큰",
-    "submit": "입력",
-    "invalid": "유효하지 않은 토큰입니다. 다시 시도하세요."
+    "submit": "확인",
+    "invalid": "유효하지 않은 토큰입니다. 다시 시도해 주세요."
   }
 }
