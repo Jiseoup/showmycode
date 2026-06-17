@@ -55,7 +55,7 @@ This is an **open-source project** that accepts external contributions. All impl
 - **PR discipline** — Squash and merge. Every PR must pass CI (format · lint · typecheck · build) and receive at least one review.
 - **Code quality** — No PR without passing checks. This project intentionally has no test suite — verify changes manually.
 - **Documentation** — User-facing changes should update relevant docs. Keep CONTRIBUTING.md and Issue/PR templates current.
-- **i18n** — All user-facing strings must support KO/EN. Never hardcode display text.
+- **i18n** — All user-facing strings must support KO/EN. Never hardcode display text. GitHub status badges that mirror API enums (`Private`/`Public`, `Merged`/`Open`/`Closed`, and file statuses `Added`/`Removed`/`Modified`/`Renamed`) are intentionally kept in English in **both** locales — treat them as fixed labels, not untranslated strings. Navigation, actions, and descriptions are localized.
 
 The goal of showmycode is to let **anyone** securely share private GitHub repositories with specific people (e.g. interviewers, collaborators) without exposing credentials. It is not just a personal portfolio tool — it is a general-purpose solution for controlled code sharing.
 
