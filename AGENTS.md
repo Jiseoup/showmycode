@@ -41,7 +41,7 @@ Copy `.env.example` to `.env.local` and fill in:
 - `GITHUB_PAT` — Fine-grained GitHub personal access token (read-only: Contents + Pull requests)
 - `GITHUB_OWNER` — GitHub username/org
 - `GITHUB_REPOS` — Comma-separated repository names to expose
-- `SHARE_TOKEN` — Access token for the share link; leave empty to block all access
+- `SHARE_TOKEN` — Access token for the share link; leave empty to run in public mode (no auth required)
 - `FILE_TREE_DEPTH` — (optional) File tree default expansion depth (`0` = all collapsed, default `0`)
 - `COMMITS_PER_PAGE` — (optional) Commits per page (default `20`, max `100`)
 - `PULLS_PER_PAGE` — (optional) Pull requests per page (default `10`, max `100`)
@@ -78,14 +78,19 @@ All pages are under `app/[lang]/` for internationalization (KO/EN). `proxy.ts` (
 
 ### Access Control
 
-All pages are protected by a share token set in `SHARE_TOKEN` env var. `proxy.ts` enforces it. There are two ways to authenticate:
+showmycode runs in one of two modes depending on whether `SHARE_TOKEN` is set:
+
+- **Public mode** (`SHARE_TOKEN` unset) — all pages are accessible without authentication. Suited to demo sites or open portfolios.
+- **Token mode** (`SHARE_TOKEN` set) — all pages are protected by the share token; `proxy.ts` enforces it.
+
+In token mode there are two ways to authenticate:
 
 1. **Shared URL** — append `?token=<SHARE_TOKEN>` to any URL → `proxy.ts` validates, sets a 30-day `httpOnly` cookie (`smc_auth`), and redirects without the token in the URL.
 2. **Manual entry** — the `/unauthorized` page POSTs the token to `app/api/auth/route.ts`, which sets the same cookie on success.
 
 Subsequent visits reuse the cookie automatically. An invalid/missing token redirects to `/unauthorized` (token entry page).
 
-If `SHARE_TOKEN` is not set, all access is blocked. The token is never exposed to the client.
+If `SHARE_TOKEN` is not set, `proxy.ts` runs in public mode and skips the auth check entirely. The token is never exposed to the client.
 
 Token comparison uses `crypto.timingSafeEqual` (via `lib/auth.ts`) to prevent timing attacks. The auth cookie stores an HMAC-SHA256 digest of the token — not the raw value — so a leaked cookie does not directly reveal the share token. Auth helpers (`verifyToken`, `verifyCookie`, `cookieValue`) live in `lib/auth.ts`. All token comparisons must go through this module — never use `===` for secret comparison.
 
