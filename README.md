@@ -135,7 +135,8 @@ GitHub responses are cached for 60 seconds, so data shown to viewers may be up t
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on branching, commit messages, and the PR process.
+Contributions are welcome!  
+Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on branching, commit messages, and the PR process.
 
 ## 📄 License
 

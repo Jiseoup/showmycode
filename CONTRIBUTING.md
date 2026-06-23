@@ -3,38 +3,42 @@
 Thanks for contributing!  
 This is a quick guide to get you up and running.
 
-## Setup
+Keep pull requests small — one feature or bug fix per PR.  
+For larger changes, open an issue first to discuss the approach.
 
-```bash
-git clone https://github.com/<your-username>/showmycode.git
-cd showmycode
-npm install
-cp .env.example .env.local   # fill in GITHUB_PAT, GITHUB_OWNER, GITHUB_REPOS (see README)
-npm run dev
-```
+## Sending a pull request
 
-## Workflow
+1. **Fork** the repository on GitHub, then **clone** your fork and add the `upstream` remote:
 
-We follow **GitHub Flow**: branch from `main`, open a PR, squash and merge.
+   ```bash
+   git clone https://github.com/<your-username>/showmycode.git
+   cd showmycode
+   git remote add upstream https://github.com/Jiseoup/showmycode.git
+   ```
 
-1. Create a branch with a prefix: `feat/`, `fix/`, `chore/`, `refactor/`, `docs/`, `i18n/`.
-2. Commit using [Conventional Commits](https://www.conventionalcommits.org/) (`feat:`, `fix:`, `chore:`, `refactor:`, `docs:`, `i18n:`).
-3. Run the checks below, then open a PR against `main` and fill in the template.
-4. PRs are **squash-merged** — the PR title becomes the commit on `main`, so it must follow Conventional Commits.
+2. **Install** dependencies and set up your environment:
 
-## Before you push
+   ```bash
+   npm install                  # also activates the git hooks
+   cp .env.example .env.local   # fill in GITHUB_PAT, GITHUB_OWNER, GITHUB_REPOS (see README)
+   npm run dev                  # http://localhost:3000
+   ```
 
-CI runs these checks automatically on every PR, but running them locally first saves a round-trip:
+3. **Create a branch** with a prefix (`feat/`, `fix/`, `chore/`, `refactor/`, `docs/`, `i18n/`) — make your changes, then run the checks:
 
-```bash
-npm run format:check   # run `npm run format` to auto-fix
-npm run lint
-npm run typecheck
-npm run build
-```
+   ```bash
+   npm run format:check   # `npm run format` to auto-fix
+   npm run lint
+   npm run typecheck
+   npm run build
+   ```
+
+4. **Commit** using [Conventional Commits](https://www.conventionalcommits.org/) (`feat:`, `fix:`, `chore:`, `refactor:`, `docs:`, `i18n:`), push to your fork, and **open a PR** against `main`, filling in the PR template. PRs are squash-merged, so the PR title must follow Conventional Commits too.
 
 ## Conventions
 
-- Code style is enforced automatically by Prettier and ESLint — just run the checks above.
-- **i18n** — all user-facing strings must support KO/EN; add new strings to both `locales/ko.json` and `locales/en.json`.
+- There's no automated test suite — verify changes manually, including dark mode and the mobile layout (down to 320px).
+- Branch names and commit messages are checked locally by git hooks (set up by `npm install`) — use the prefixes above.
+- Code style is enforced by Prettier and ESLint — just run the checks above.
+- **i18n** — all user-facing strings must support EN/KO; add new strings to both `locales/en.json` and `locales/ko.json`.
 - Be kind and respectful. See the [Code of Conduct](CODE_OF_CONDUCT.md).
