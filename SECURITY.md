@@ -1,6 +1,6 @@
 # Security Policy
 
-showmycode exists to share private code *without* exposing credentials, so we take security reports seriously.  
+showmycode exists to share private code _without_ exposing credentials, so we take security reports seriously.  
 Thank you for helping keep the project and its users safe.
 
 ## Supported Versions
