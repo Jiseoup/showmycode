@@ -1,3 +1,4 @@
+import { connection } from "next/server";
 import { getAllowedRepos, getRepo } from "@/lib/github";
 import { RepoCard } from "@/components/RepoCard";
 import { BrandLink } from "@/components/BrandLink";
@@ -8,6 +9,9 @@ import { getDictionary, type Locale } from "@/lib/i18n.server";
 const OWNER = process.env.GITHUB_OWNER!;
 
 export default async function HomePage({ params }: { params: Promise<{ lang: string }> }) {
+  // Render at request time, not at build, so the build needs no GitHub secrets (60s cache still applies).
+  await connection();
+
   const { lang } = await params;
   const locale = lang as Locale;
   const [repos] = await Promise.all([
