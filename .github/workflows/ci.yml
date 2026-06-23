@@ -37,7 +37,3 @@ jobs:
 
       - name: Build
         run: npm run build
-        env:
-          GITHUB_PAT: ${{ secrets.GITHUB_PAT }}
-          GITHUB_OWNER: ${{ secrets.GITHUB_OWNER }}
-          GITHUB_REPOS: ${{ secrets.GITHUB_REPOS }}
