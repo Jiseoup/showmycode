@@ -25,6 +25,10 @@
     "shiki": "^4.3.0",
     "tailwind-merge": "^3.6.0"
   },
+  "overrides": {
+    "postcss": "^8.5.15",
+    "@babel/core": "^7.29.7"
+  },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
     "@types/node": "^26.0.1",
