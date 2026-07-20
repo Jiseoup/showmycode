@@ -14,10 +14,10 @@
     "prepare": "git config core.hooksPath .githooks"
   },
   "dependencies": {
-    "@radix-ui/react-select": "^2.3.2",
+    "@radix-ui/react-select": "^2.3.4",
     "@vercel/analytics": "^2.0.1",
     "clsx": "^2.1.1",
-    "lucide-react": "^1.23.0",
+    "lucide-react": "^1.25.0",
     "next": "16.2.10",
     "react": "19.2.7",
     "react-dom": "19.2.7",
@@ -32,13 +32,13 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
-    "@types/node": "^26.1.0",
+    "@types/node": "^26.1.1",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^10",
     "eslint-config-next": "16.2.10",
-    "prettier": "^3.9.4",
-    "prettier-plugin-tailwindcss": "^0.8.0",
+    "prettier": "^3.9.5",
+    "prettier-plugin-tailwindcss": "^0.8.1",
     "tailwindcss": "^4",
     "typescript": "^6"
   }
