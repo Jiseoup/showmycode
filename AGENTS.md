@@ -45,6 +45,7 @@ Copy `.env.example` to `.env.local` and fill in:
 - `FILE_TREE_DEPTH` — (optional) File tree default expansion depth (`0` = all collapsed, default `0`)
 - `COMMITS_PER_PAGE` — (optional) Commits per page (default `20`, max `100`)
 - `PULLS_PER_PAGE` — (optional) Pull requests per page (default `10`, max `100`)
+- `ENABLE_ANALYTICS` — (optional) Set to `true` to load Vercel Web Analytics in the root layout; off by default so self-hosted/forked deployments ship no tracking script
 
 ## Project Philosophy
 

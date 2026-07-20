@@ -51,6 +51,7 @@ cp .env.example .env.local
 | `COMMITS_PER_PAGE` | Commits per page (max `100`)                                  | No       | `20`    |
 | `PULLS_PER_PAGE`   | Pull requests per page (max `100`)                            | No       | `10`    |
 | `SHARE_TOKEN`      | Access token for the share link (leave empty for public mode) | No       | —       |
+| `ENABLE_ANALYTICS` | Set to `true` to load Vercel Web Analytics (off by default)   | No       | —       |
 
 ### 🔑 Creating a GitHub PAT
 
@@ -132,6 +133,13 @@ All GitHub API calls happen server-side. The PAT never reaches the browser.
 Repository access is restricted to the repos listed in `GITHUB_REPOS` — any unlisted repo returns a 404.
 
 GitHub responses are cached for 60 seconds, so data shown to viewers may be up to one minute stale.
+
+## 📊 Analytics
+
+The [Live Demo](https://showmycode.vercel.app) uses [Vercel Web Analytics](https://vercel.com/docs/analytics) to measure traffic.  
+It is anonymous and cookieless — no personal data is collected and no cross-site tracking is performed.
+
+**Analytics is disabled by default.** The tracking script is only loaded when `ENABLE_ANALYTICS=true` is set, so self-hosted and forked deployments ship no tracking script unless you explicitly enable it. To use it on your own deployment, set the variable and enable Web Analytics for your project in the Vercel dashboard. No traffic data is ever sent to the maintainers.
 
 ## 🤝 Contributing
 

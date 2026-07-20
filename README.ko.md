@@ -41,15 +41,16 @@
 cp .env.example .env.local
 ```
 
-| 변수명             | 설명                                             | 필수 | 기본값 |
-| ------------------ | ------------------------------------------------ | ---- | ------ |
-| `GITHUB_PAT`       | Fine-grained GitHub 개인 액세스 토큰 (읽기 전용) | Yes  | —      |
-| `GITHUB_OWNER`     | GitHub 사용자명 또는 조직명                      | Yes  | —      |
-| `GITHUB_REPOS`     | 노출할 레포지토리 이름 (쉼표로 구분)             | Yes  | —      |
-| `FILE_TREE_DEPTH`  | 파일 트리 기본 펼침 깊이 (`0` = 모두 접힘)       | No   | `0`    |
-| `COMMITS_PER_PAGE` | 페이지당 커밋 수 (최대 `100`)                    | No   | `20`   |
-| `PULLS_PER_PAGE`   | 페이지당 풀 리퀘스트 수 (최대 `100`)             | No   | `10`   |
-| `SHARE_TOKEN`      | 공유 링크 접근 토큰 (비우면 공개 모드)           | No   | —      |
+| 변수명             | 설명                                                           | 필수 | 기본값 |
+| ------------------ | -------------------------------------------------------------- | ---- | ------ |
+| `GITHUB_PAT`       | Fine-grained GitHub 개인 액세스 토큰 (읽기 전용)               | Yes  | —      |
+| `GITHUB_OWNER`     | GitHub 사용자명 또는 조직명                                    | Yes  | —      |
+| `GITHUB_REPOS`     | 노출할 레포지토리 이름 (쉼표로 구분)                           | Yes  | —      |
+| `FILE_TREE_DEPTH`  | 파일 트리 기본 펼침 깊이 (`0` = 모두 접힘)                     | No   | `0`    |
+| `COMMITS_PER_PAGE` | 페이지당 커밋 수 (최대 `100`)                                  | No   | `20`   |
+| `PULLS_PER_PAGE`   | 페이지당 풀 리퀘스트 수 (최대 `100`)                           | No   | `10`   |
+| `SHARE_TOKEN`      | 공유 링크 접근 토큰 (비우면 공개 모드)                         | No   | —      |
+| `ENABLE_ANALYTICS` | Vercel Web Analytics를 불러오려면 `true`로 설정 (기본: 비활성) | No   | —      |
 
 ### 🔑 GitHub PAT 발급 방법
 
@@ -131,6 +132,13 @@ npm run typecheck       # tsc --noEmit 실행
 레포지토리 접근은 `GITHUB_REPOS`에 나열된 레포로 제한되며, 목록에 없는 레포는 404를 반환합니다.
 
 GitHub 응답은 60초 동안 캐시되므로, 뷰어에게 표시되는 데이터는 최대 1분까지 지연될 수 있습니다.
+
+## 📊 애널리틱스
+
+[라이브 데모](https://showmycode.vercel.app)는 트래픽 측정을 위해 [Vercel Web Analytics](https://vercel.com/docs/analytics)를 사용합니다.  
+이는 익명이며 쿠키를 사용하지 않습니다 — 개인정보를 수집하지 않고, 사이트 간 추적도 하지 않습니다.
+
+**애널리틱스는 기본적으로 비활성화되어 있습니다.** 트래킹 스크립트는 `ENABLE_ANALYTICS=true`가 설정된 경우에만 로드되므로, 직접 호스팅하거나 포크한 배포에서는 명시적으로 켜지 않는 한 어떤 트래킹 스크립트도 실리지 않습니다. 본인 배포에서 사용하려면 이 변수를 설정하고 Vercel 대시보드에서 프로젝트의 Web Analytics를 활성화하세요. 메인테이너에게는 어떤 트래픽 데이터도 전송되지 않습니다.
 
 ## 🤝 기여하기
 
