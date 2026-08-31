@@ -46,6 +46,8 @@ Copy `.env.example` to `.env.local` and fill in:
 - `COMMITS_PER_PAGE` — (optional) Commits per page (default `20`, max `100`)
 - `PULLS_PER_PAGE` — (optional) Pull requests per page (default `10`, max `100`)
 - `ENABLE_ANALYTICS` — (optional) Set to `true` to load Vercel Web Analytics in the root layout; off by default so self-hosted/forked deployments ship no tracking script
+- `ENABLE_SEO` — (optional) Set to `true` to allow search engine indexing; off by default so a self-hosted instance never exposes the repositories it serves to crawlers
+- `SITE_URL` — (optional) Public origin of the deployment, used for `metadataBase`, canonical URLs, and the sitemap; falls back to `VERCEL_PROJECT_PRODUCTION_URL`, then `http://localhost:3000`
 
 ## Project Philosophy
 
@@ -95,7 +97,7 @@ If `SHARE_TOKEN` is not set, `proxy.ts` runs in public mode and skips the auth c
 
 Token comparison uses `crypto.timingSafeEqual` (via `lib/auth.ts`) to prevent timing attacks. The auth cookie stores an HMAC-SHA256 digest of the token — not the raw value — so a leaked cookie does not directly reveal the share token. Auth helpers (`verifyToken`, `verifyCookie`, `cookieValue`) live in `lib/auth.ts`. All token comparisons must go through this module — never use `===` for secret comparison.
 
-Note: the `proxy.ts` matcher excludes `/api/*`, framework internals (`_next/static`, `_next/image`), and known static assets by name (`favicon.ico`, `icon.svg`) — API routes are NOT covered by the share-token check and must enforce their own auth. Currently the only API route is `/api/auth`, which is intentionally public (it is the token-entry endpoint). The matcher deliberately does NOT exclude dotted paths (`.*\..*`): repository names can contain dots (e.g. `next.js`), and a blanket dot-exclusion would let those repo pages bypass auth. If you add files to `public/`, add them to the matcher exclusion list or they will hit the auth gate.
+Note: the `proxy.ts` matcher excludes `/api/*`, framework internals (`_next/static`, `_next/image`), and known static assets by name (`favicon.ico`, `icon.svg`, `robots.txt`, `sitemap.xml`) — API routes are NOT covered by the share-token check and must enforce their own auth. Currently the only API route is `/api/auth`, which is intentionally public (it is the token-entry endpoint). The matcher deliberately does NOT exclude dotted paths (`.*\..*`): repository names can contain dots (e.g. `next.js`), and a blanket dot-exclusion would let those repo pages bypass auth. If you add files to `public/`, add them to the matcher exclusion list or they will hit the auth gate.
 
 ### GitHub API Security Model
 
@@ -123,4 +125,5 @@ GitHub responses are cached for 60 seconds via `next: { revalidate: 60 }` in `gh
 - **Pagination** — implemented via `?page=N` searchParams on server components; `hasNext` is inferred from `results.length === perPage` (GitHub API does not return total count).
 - **Styling** — Tailwind CSS v4 with class-based dark mode; CSS custom properties for theming; `lib/utils.ts` exports `cn()` (clsx + tailwind-merge). Use `px-3 md:px-6` (not bare `px-6`) for page-level horizontal padding.
 - **shadcn/ui** — configured in `components.json` (zinc base color, `@/` aliases, no `tailwind.config.ts` — Tailwind v4 config lives in `globals.css`). When adding a new shadcn component, also add the required CSS variables (`--popover`, `--popover-foreground`, `--input`, `--ring`, etc.) to both `:root` and `.dark` in `app/globals.css`, and map them in the `@theme inline` block. The shadcn CLI may not auto-inject these variables, so verify manually.
+- **SEO and indexing** — indexing is opt-in via `ENABLE_SEO`; off by default every deployment emits `noindex, nofollow` and a `robots.txt` that disallows everything, so a self-hosted instance never exposes the repositories it serves to crawlers. `app/robots.ts` and `app/sitemap.ts` are `force-dynamic` so they read `SITE_URL` at request time and stay consistent with `metadataBase` in `app/layout.tsx`; both are excluded from the `proxy.ts` matcher or they would be caught by the auth gate and locale redirect. `<html lang>` comes from the `x-locale` request header that `proxy.ts` sets, since the root layout sits above `app/[lang]` and has no locale param. Open Graph tags are emitted regardless of `ENABLE_SEO` — they only shape link previews.
 - **Comments** — all code comments must be written in English and end with a period.

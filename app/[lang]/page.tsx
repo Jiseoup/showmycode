@@ -5,8 +5,29 @@ import { BrandLink } from "@/components/BrandLink";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { LangSwitcher } from "@/components/LangSwitcher";
 import { getDictionary, type Locale } from "@/lib/i18n.server";
+import { locales } from "@/lib/i18n";
+import { seoEnabled } from "@/lib/site";
+import type { Metadata } from "next";
 
 const OWNER = process.env.GITHUB_OWNER!;
+
+// Point every locale of the landing page at itself as canonical, and declare the
+// other locale as an alternate so /en and /ko do not compete as duplicates.
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ lang: string }>;
+}): Promise<Metadata> {
+  if (!seoEnabled) return {};
+
+  const { lang } = await params;
+  return {
+    alternates: {
+      canonical: `/${lang}`,
+      languages: Object.fromEntries(locales.map((l) => [l, `/${l}`])),
+    },
+  };
+}
 
 export default async function HomePage({ params }: { params: Promise<{ lang: string }> }) {
   // Render at request time, not at build, so the build needs no GitHub secrets (60s cache still applies).

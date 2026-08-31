@@ -42,16 +42,18 @@ Copy `.env.example` to `.env.local` and fill in the values:
 cp .env.example .env.local
 ```
 
-| Variable           | Description                                                   | Required | Default |
-| ------------------ | ------------------------------------------------------------- | -------- | ------- |
-| `GITHUB_PAT`       | Fine-grained GitHub personal access token (read-only)         | Yes      | —       |
-| `GITHUB_OWNER`     | GitHub username or organization                               | Yes      | —       |
-| `GITHUB_REPOS`     | Comma-separated repository names to expose                    | Yes      | —       |
-| `FILE_TREE_DEPTH`  | File tree default expansion depth (`0` = all collapsed)       | No       | `0`     |
-| `COMMITS_PER_PAGE` | Commits per page (max `100`)                                  | No       | `20`    |
-| `PULLS_PER_PAGE`   | Pull requests per page (max `100`)                            | No       | `10`    |
-| `SHARE_TOKEN`      | Access token for the share link (leave empty for public mode) | No       | —       |
-| `ENABLE_ANALYTICS` | Set to `true` to load Vercel Web Analytics (off by default)   | No       | —       |
+| Variable           | Description                                                                     | Required | Default       |
+| ------------------ | ------------------------------------------------------------------------------- | -------- | ------------- |
+| `GITHUB_PAT`       | Fine-grained GitHub personal access token (read-only)                           | Yes      | —             |
+| `GITHUB_OWNER`     | GitHub username or organization                                                 | Yes      | —             |
+| `GITHUB_REPOS`     | Comma-separated repository names to expose                                      | Yes      | —             |
+| `FILE_TREE_DEPTH`  | File tree default expansion depth (`0` = all collapsed)                         | No       | `0`           |
+| `COMMITS_PER_PAGE` | Commits per page (max `100`)                                                    | No       | `20`          |
+| `PULLS_PER_PAGE`   | Pull requests per page (max `100`)                                              | No       | `10`          |
+| `SHARE_TOKEN`      | Access token for the share link (leave empty for public mode)                   | No       | —             |
+| `ENABLE_ANALYTICS` | Set to `true` to load Vercel Web Analytics (off by default)                     | No       | —             |
+| `ENABLE_SEO`       | Set to `true` to allow search engines to index this deployment (off by default) | No       | —             |
+| `SITE_URL`         | Public origin, used for canonical URLs, sitemap, and link previews              | No       | Vercel domain |
 
 ### 🔑 Creating a GitHub PAT
 
@@ -72,6 +74,8 @@ showmycode supports two modes depending on whether `SHARE_TOKEN` is set:
 ### Public Mode (no `SHARE_TOKEN`)
 
 All pages are accessible without authentication. Ideal for demo sites or open portfolios.
+
+Public mode does not mean search engines should find it — see [Search Engine Indexing](#-search-engine-indexing) for the crawler defaults.
 
 ### Token Mode (with `SHARE_TOKEN`)
 
@@ -133,6 +137,16 @@ All GitHub API calls happen server-side. The PAT never reaches the browser.
 Repository access is restricted to the repos listed in `GITHUB_REPOS` — any unlisted repo returns a 404.
 
 GitHub responses are cached for 60 seconds, so data shown to viewers may be up to one minute stale.
+
+## 🌐 Search Engine Indexing
+
+**Indexing is disabled by default.** Every deployment serves `noindex, nofollow` and a `robots.txt` that disallows crawling, so a self-hosted or forked instance never shows up in search results unless you explicitly opt in.
+
+This matters most in public mode: without it, search engines could index the repository names your instance serves — and the code behind them.
+
+Set `ENABLE_SEO=true` only on a public demo or landing site. Even then, repository, commit, and pull request views stay disallowed; only the localized landing pages are indexed. Pair it with `SITE_URL` so canonical URLs cannot fall back to `localhost`.
+
+Link previews are unaffected by this setting. Open Graph tags are always emitted, so sharing your link in Slack or Discord shows a title and description either way.
 
 ## 📊 Analytics
 
