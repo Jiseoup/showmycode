@@ -1,0 +1,46 @@
+# Configures how GitHub groups pull requests when it generates release notes.
+#
+# Categories are matched from top to bottom and the first match wins, so
+# "Dependencies" has to stay above "Maintenance": Dependabot pull requests
+# carry the "chore" label as well, and would otherwise be swallowed by it.
+#
+# Labels come from .github/workflows/pr-labeler.yml, which maps the
+# Conventional Commits prefix in the pull request title.
+#
+# To leave dependency bumps out of the notes entirely, add a top-level
+# exclude block under "changelog" with "authors: [dependabot]".
+changelog:
+  categories:
+    - title: ✨ Features
+      labels:
+        - feat
+
+    - title: 🐛 Fixes
+      labels:
+        - fix
+
+    - title: 🌐 Internationalization
+      labels:
+        - i18n
+
+    - title: ♻️ Refactoring
+      labels:
+        - refactor
+
+    - title: 📚 Documentation
+      labels:
+        - docs
+
+    # Keep above "Maintenance" — see the note at the top of this file.
+    - title: 📦 Dependencies
+      labels:
+        - dependencies
+
+    - title: 🧹 Maintenance
+      labels:
+        - chore
+
+    # Catches pull requests the labeler did not tag.
+    - title: 🔍 Other Changes
+      labels:
+        - "*"
