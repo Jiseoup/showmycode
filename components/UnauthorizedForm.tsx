@@ -32,6 +32,9 @@ export function UnauthorizedForm({ title, description, placeholder, submit, inva
       });
       if (res.ok) {
         // Full page navigation so the freshly-set cookie is sent on the next request.
+        // A soft navigation would not re-run proxy.ts with the new cookie, and this page
+        // lives outside the [lang] layout, so proxy.ts still has to resolve the locale.
+        // eslint-disable-next-line @next/next/no-location-assign-relative-destination
         window.location.assign("/");
         return;
       }
