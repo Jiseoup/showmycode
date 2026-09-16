@@ -10,9 +10,20 @@ updates:
       prefix: "chore"
     groups:
       minor-and-patch:
+        applies-to: version-updates
         update-types:
           - "minor"
           - "patch"
+      security:
+        applies-to: security-updates
+        patterns:
+          - "*"
+    ignore:
+      # eslint-plugin-react (peer: eslint ^9.7) and eslint-plugin-import
+      # (peer: eslint ^9), both bundled by eslint-config-next, crash on
+      # eslint 10. Remove this once Next ships eslint 10 support.
+      - dependency-name: "eslint"
+        update-types: ["version-update:semver-major"]
     labels:
       - "dependencies"
 
