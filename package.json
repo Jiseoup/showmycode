@@ -20,14 +20,14 @@
     "@radix-ui/react-select": "^2.3.7",
     "@vercel/analytics": "^2.0.1",
     "clsx": "^2.1.1",
-    "lucide-react": "^1.44.0",
-    "next": "16.3.4",
+    "lucide-react": "^1.45.0",
+    "next": "16.3.5",
     "react": "19.3.0",
     "react-dom": "19.3.0",
     "react-markdown": "^10.1.0",
     "remark-gfm": "^4.0.1",
     "shiki": "^4.4.3",
-    "tailwind-merge": "^3.6.0"
+    "tailwind-merge": "^3.7.0"
   },
   "overrides": {
     "postcss": "^8.5.15",
@@ -39,7 +39,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
-    "eslint-config-next": "16.3.4",
+    "eslint-config-next": "16.3.5",
     "prettier": "^3.9.6",
     "prettier-plugin-tailwindcss": "^0.8.1",
     "tailwindcss": "^4",
