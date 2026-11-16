@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getRepo, getAllowedRepos } from "@/lib/github";
+import { getRepo, isAllowedRepo } from "@/lib/github";
 import { BrandLink } from "@/components/BrandLink";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { LangSwitcher } from "@/components/LangSwitcher";
@@ -15,9 +15,9 @@ export default async function RepoLayout({ children, params }: Props) {
   const { lang, owner, repo } = await params;
   const locale = lang as Locale;
 
-  // Guard: reject any repo not in the allowlist before fetching or rendering anything.
-  const allowed = getAllowedRepos().some((r) => r.owner === owner && r.repo === repo);
-  if (!allowed) notFound();
+  // Early 404 for repos outside the allowlist. This does not protect the page data on its
+  // own (pages render in parallel with layouts); lib/github.ts enforces it on every fetch.
+  if (!isAllowedRepo(owner, repo)) notFound();
 
   const [repoData, dict] = await Promise.all([getRepo(owner, repo), getDictionary(locale)]);
 

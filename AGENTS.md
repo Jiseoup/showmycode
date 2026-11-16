@@ -107,7 +107,7 @@ The GitHub PAT never reaches the client. All GitHub API calls happen server-side
 Server Component → lib/github.ts → GitHub API (with PAT from env)
 ```
 
-There is no client-facing GitHub proxy route; do not add one without share-token auth (`proxy.ts` does not cover `/api/*` — see Access Control). The repository layout (`app/[lang]/repository/[owner]/[repo]/layout.tsx`) validates `owner`/`repo` against the `GITHUB_REPOS` allowlist (`getAllowedRepos()`) and 404s anything else.
+There is no client-facing GitHub proxy route; do not add one without share-token auth (`proxy.ts` does not cover `/api/*` — see Access Control). The `GITHUB_REPOS` allowlist is enforced in `lib/github.ts`: every repo-scoped helper builds its URL through `repoPath()`, which 404s repos outside the allowlist and URL-encodes each segment (rejecting `.`/`..`) so URL input cannot step out of the repo path. Route every new repo-scoped GitHub call through `repoPath()`. Do not rely on a layout-level check for access control — layouts render in parallel with pages, so a page still fetches and streams its data even when its layout calls `notFound()`. The repository layout keeps an early `isAllowedRepo()` check only to 404 before rendering its header.
 
 GitHub responses are cached for 60 seconds via `next: { revalidate: 60 }` in `ghFetch` (`lib/github.ts`) — data shown to viewers may be up to a minute stale.
 

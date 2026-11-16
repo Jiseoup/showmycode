@@ -1,3 +1,6 @@
+import "server-only";
+import { notFound } from "next/navigation";
+
 const BASE = "https://api.github.com";
 const PAT = process.env.GITHUB_PAT!;
 
@@ -18,7 +21,7 @@ async function ghFetch<T>(path: string, params?: Record<string, string>): Promis
 
 // Repository info.
 export async function getRepo(owner: string, repo: string) {
-  return ghFetch<GhRepo>(`repos/${owner}/${repo}`);
+  return ghFetch<GhRepo>(repoPath(owner, repo));
 }
 
 // Allowed repo list (from environment variables).
@@ -31,14 +34,34 @@ export function getAllowedRepos(): { owner: string; repo: string }[] {
   return repos.map((repo) => ({ owner, repo }));
 }
 
+export function isAllowedRepo(owner: string, repo: string): boolean {
+  return getAllowedRepos().some((r) => r.owner === owner && r.repo === repo);
+}
+
+// Builds a repo-scoped API path. Every repo-scoped request must go through here.
+// The allowlist is enforced next to the fetch, not only in the repository layout: layouts
+// render in parallel with pages, so a layout-only check does not stop a page from fetching
+// and streaming data for a repo outside the allowlist.
+// Each segment is URL-encoded, and "." / ".." segments are rejected, so user input such as
+// a commit SHA from the URL cannot step out of the repo path.
+function repoPath(owner: string, repo: string, ...segments: string[]): string {
+  if (!isAllowedRepo(owner, repo)) notFound();
+  const parts = [owner, repo, ...segments];
+  if (parts.some((p) => p === "" || p === "." || p === "..")) notFound();
+  return ["repos", ...parts.map(encodeURIComponent)].join("/");
+}
+
 // File tree.
 export async function getTree(owner: string, repo: string, ref = "HEAD") {
-  return ghFetch<GhTree>(`repos/${owner}/${repo}/git/trees/${ref}`, { recursive: "1" });
+  // Branch names may contain "/", so each part is encoded separately.
+  return ghFetch<GhTree>(repoPath(owner, repo, "git", "trees", ...ref.split("/")), {
+    recursive: "1",
+  });
 }
 
 // File contents.
 export async function getContents(owner: string, repo: string, path: string, ref = "HEAD") {
-  return ghFetch<GhContent>(`repos/${owner}/${repo}/contents/${encodeURIComponent(path)}`, { ref });
+  return ghFetch<GhContent>(repoPath(owner, repo, "contents", path), { ref });
 }
 
 // Commit list. The `sha` param accepts a branch name or commit SHA.
@@ -49,7 +72,7 @@ export async function getCommits(
   perPage = 30,
   page = 1,
 ) {
-  return ghFetch<GhCommit[]>(`repos/${owner}/${repo}/commits`, {
+  return ghFetch<GhCommit[]>(repoPath(owner, repo, "commits"), {
     sha,
     per_page: String(perPage),
     page: String(page),
@@ -58,7 +81,7 @@ export async function getCommits(
 
 // Branch list.
 export async function getBranches(owner: string, repo: string) {
-  return ghFetch<GhBranch[]>(`repos/${owner}/${repo}/branches`, { per_page: "100" });
+  return ghFetch<GhBranch[]>(repoPath(owner, repo, "branches"), { per_page: "100" });
 }
 
 // PR list.
@@ -69,7 +92,7 @@ export async function getPulls(
   perPage = 30,
   page = 1,
 ) {
-  return ghFetch<GhPull[]>(`repos/${owner}/${repo}/pulls`, {
+  return ghFetch<GhPull[]>(repoPath(owner, repo, "pulls"), {
     state,
     per_page: String(perPage),
     page: String(page),
@@ -78,26 +101,26 @@ export async function getPulls(
 
 // Single PR.
 export async function getPull(owner: string, repo: string, number: number) {
-  return ghFetch<GhPull>(`repos/${owner}/${repo}/pulls/${number}`);
+  return ghFetch<GhPull>(repoPath(owner, repo, "pulls", String(number)));
 }
 
 // PR changed files.
 export async function getPullFiles(owner: string, repo: string, number: number) {
-  return ghFetch<GhPullFile[]>(`repos/${owner}/${repo}/pulls/${number}/files`, {
+  return ghFetch<GhPullFile[]>(repoPath(owner, repo, "pulls", String(number), "files"), {
     per_page: "100",
   });
 }
 
 // PR commit list.
 export async function getPullCommits(owner: string, repo: string, number: number) {
-  return ghFetch<GhCommit[]>(`repos/${owner}/${repo}/pulls/${number}/commits`, {
+  return ghFetch<GhCommit[]>(repoPath(owner, repo, "pulls", String(number), "commits"), {
     per_page: "100",
   });
 }
 
 // Single commit (includes file changes).
 export async function getCommit(owner: string, repo: string, sha: string) {
-  return ghFetch<GhCommitDetail>(`repos/${owner}/${repo}/commits/${sha}`);
+  return ghFetch<GhCommitDetail>(repoPath(owner, repo, "commits", sha));
 }
 
 // Types.
