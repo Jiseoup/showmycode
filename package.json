@@ -17,6 +17,7 @@
     "prepare": "git config core.hooksPath .githooks"
   },
   "dependencies": {
+    "@radix-ui/react-dropdown-menu": "^2.2.1",
     "@radix-ui/react-select": "^2.4.1",
     "@vercel/analytics": "^2.0.1",
     "clsx": "^2.1.1",

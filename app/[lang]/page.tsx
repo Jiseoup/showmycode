@@ -47,7 +47,7 @@ export default async function HomePage({ params }: { params: Promise<{ lang: str
           <BrandLink locale={locale} label={OWNER} />
         </div>
         <div className="flex items-center gap-3">
-          <LangSwitcher currentLang={locale} />
+          <LangSwitcher currentLang={locale} label={dict.header.changeLanguage} />
           <ThemeToggle />
         </div>
       </header>
