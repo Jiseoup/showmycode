@@ -1,7 +1,6 @@
 "use client";
 
 import { Suspense } from "react";
-import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Check, Globe } from "lucide-react";
 import { locales, localeNames, type Locale } from "@/lib/i18n";
@@ -38,9 +37,11 @@ function LangMenu({ currentLang, label, query }: Props & { query: string }) {
       <DropdownMenuContent align="end">
         {locales.map((lang) => {
           const active = lang === currentLang;
+          // A plain anchor on purpose: the root layout sets <html lang> and is not
+          // re-rendered on client-side navigation, so a <Link> would leave it stale.
           return (
             <DropdownMenuItem key={lang} asChild>
-              <Link
+              <a
                 href={switchTo(lang)}
                 lang={lang}
                 hrefLang={lang}
@@ -49,7 +50,7 @@ function LangMenu({ currentLang, label, query }: Props & { query: string }) {
               >
                 <Check className={active ? "opacity-100" : "opacity-0"} aria-hidden />
                 {localeNames[lang]}
-              </Link>
+              </a>
             </DropdownMenuItem>
           );
         })}
