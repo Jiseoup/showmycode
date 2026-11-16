@@ -44,7 +44,7 @@ export default async function RepoLayout({ children, params }: Props) {
           </span>
         </div>
         <div className="flex items-center gap-3">
-          <LangSwitcher currentLang={locale} />
+          <LangSwitcher currentLang={locale} label={dict.header.changeLanguage} />
           <ThemeToggle />
         </div>
       </header>

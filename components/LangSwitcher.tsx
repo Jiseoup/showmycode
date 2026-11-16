@@ -3,11 +3,18 @@
 import { Suspense } from "react";
 import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
-import { locales, type Locale } from "@/lib/i18n";
+import { Check, Globe } from "lucide-react";
+import { locales, localeNames, type Locale } from "@/lib/i18n";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
-const labels: Record<Locale, string> = { ko: "KO", en: "EN" };
+type Props = { currentLang: Locale; label: string };
 
-function LangLinks({ currentLang, query }: { currentLang: Locale; query: string }) {
+function LangMenu({ currentLang, label, query }: Props & { query: string }) {
   const pathname = usePathname();
 
   function switchTo(lang: Locale) {
@@ -20,38 +27,49 @@ function LangLinks({ currentLang, query }: { currentLang: Locale; query: string 
   }
 
   return (
-    <div className="flex items-center gap-0.5 text-xs">
-      {locales.map((lang, i) => (
-        <span key={lang} className="flex items-center gap-0.5">
-          {i > 0 && <span className="text-muted-foreground/40">|</span>}
-          {lang === currentLang ? (
-            <span className="text-foreground font-semibold">{labels[lang]}</span>
-          ) : (
-            <Link
-              href={switchTo(lang)}
-              className="text-muted-foreground hover:text-foreground transition-colors"
-            >
-              {labels[lang]}
-            </Link>
-          )}
-        </span>
-      ))}
-    </div>
+    <DropdownMenu modal={false}>
+      <DropdownMenuTrigger
+        className="hover:bg-accent text-muted-foreground hover:text-foreground focus-visible:ring-ring data-[state=open]:bg-accent data-[state=open]:text-foreground flex items-center gap-1 rounded-md px-2 py-1.5 text-xs font-medium uppercase transition-colors focus-visible:ring-2 focus-visible:outline-none"
+        aria-label={label}
+      >
+        <Globe className="h-4 w-4" aria-hidden />
+        {currentLang}
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        {locales.map((lang) => {
+          const active = lang === currentLang;
+          return (
+            <DropdownMenuItem key={lang} asChild>
+              <Link
+                href={switchTo(lang)}
+                lang={lang}
+                hrefLang={lang}
+                aria-current={active ? "true" : undefined}
+                className={active ? "font-medium" : undefined}
+              >
+                <Check className={active ? "opacity-100" : "opacity-0"} aria-hidden />
+                {localeNames[lang]}
+              </Link>
+            </DropdownMenuItem>
+          );
+        })}
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
 
 // Reads the query string; isolated so the Suspense boundary can prerender the rest.
-function QueryAwareLangLinks({ currentLang }: { currentLang: Locale }) {
+function QueryAwareLangMenu(props: Props) {
   const query = useSearchParams().toString();
-  return <LangLinks currentLang={currentLang} query={query} />;
+  return <LangMenu {...props} query={query} />;
 }
 
-export function LangSwitcher({ currentLang }: { currentLang: Locale }) {
+export function LangSwitcher(props: Props) {
   // useSearchParams requires a Suspense boundary to keep prerendered routes static.
   // The fallback renders the switcher without query params (the value during prerender).
   return (
-    <Suspense fallback={<LangLinks currentLang={currentLang} query="" />}>
-      <QueryAwareLangLinks currentLang={currentLang} />
+    <Suspense fallback={<LangMenu {...props} query="" />}>
+      <QueryAwareLangMenu {...props} />
     </Suspense>
   );
 }

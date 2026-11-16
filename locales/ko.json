@@ -1,4 +1,7 @@
 {
+  "header": {
+    "changeLanguage": "언어 변경"
+  },
   "nav": {
     "code": "코드",
     "commits": "커밋",
