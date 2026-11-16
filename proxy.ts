@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { locales, defaultLocale, hasLocale } from "@/lib/i18n";
+import { locales, matchLocale } from "@/lib/i18n";
 import { COOKIE_NAME, verifyToken, verifyCookie, cookieValue } from "@/lib/auth";
 
 // Paths that are accessible without a valid auth cookie.
@@ -16,9 +16,7 @@ function isPublicPath(pathname: string): boolean {
 const LOCALE_HEADER = "x-locale";
 
 function detectLocale(request: NextRequest): string {
-  const acceptLang = request.headers.get("accept-language") ?? "";
-  const detected = acceptLang.split(",")[0].split("-")[0].toLowerCase();
-  return hasLocale(detected) ? detected : defaultLocale;
+  return matchLocale(request.headers.get("accept-language"));
 }
 
 // The locale already in the path, or the one the Accept-Language header asks for.
