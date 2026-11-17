@@ -72,6 +72,11 @@
     "title": "데이터를 불러오지 못했습니다.",
     "retry": "다시 시도"
   },
+  "notFound": {
+    "title": "페이지를 찾을 수 없습니다",
+    "description": "요청하신 페이지가 없거나 이동되었습니다.",
+    "home": "홈으로"
+  },
   "unauthorized": {
     "title": "접근이 제한되었습니다",
     "description": "계속하려면 액세스 토큰을 입력하세요.",

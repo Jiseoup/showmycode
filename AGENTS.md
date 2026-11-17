@@ -1,8 +1,10 @@
 <!-- BEGIN:nextjs-agent-rules -->
 
-# This is NOT the Next.js you know
+## This is NOT the Next.js you know
 
-This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices.
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
 
 <!-- END:nextjs-agent-rules -->
 
@@ -121,7 +123,7 @@ GitHub responses are cached for 60 seconds via `next: { revalidate: 60 }` in `gh
 - **Markdown rendering** — `MarkdownBody.tsx` uses `react-markdown` + `remark-gfm` with custom Tailwind-styled components (no `@tailwindcss/typography`). Use this component for any user-generated Markdown content.
 - **Diff view** — `FilesChanged.tsx` renders GitHub-style diffs with per-file and global fold/unfold; it accepts `GhPullFile[]` and a dict slice. `FilesChangedWithTree.tsx` wraps it with a changed-files tree sidebar for navigation, and is what the PR detail and commit detail pages actually import.
 - **Loading UI** — every data-fetching route has a co-located `loading.tsx` with `animate-pulse` skeletons matching the page layout to minimize CLS.
-- **Error UI** — `app/global-error.tsx` is the root error boundary; `app/[lang]/repository/[owner]/[repo]/error.tsx` catches errors within the repository view. Both are `"use client"` per the App Router convention.
+- **Error UI** — `app/global-error.tsx` is the root error boundary; `app/[lang]/repository/[owner]/[repo]/error.tsx` catches errors within the repository view. Both are `"use client"` per the App Router convention. `app/not-found.tsx` is the single 404 page for unmatched URLs and every `notFound()` call; it sits above `app/[lang]`, so it reads the locale from the `x-locale` header like the root layout. Its copy stays generic so a missing repo and a repo outside the allowlist look the same.
 - **Pagination** — implemented via `?page=N` searchParams on server components; `hasNext` is inferred from `results.length === perPage` (GitHub API does not return total count).
 - **Styling** — Tailwind CSS v4 with class-based dark mode; CSS custom properties for theming; `lib/utils.ts` exports `cn()` (clsx + tailwind-merge). Use `px-3 md:px-6` (not bare `px-6`) for page-level horizontal padding.
 - **shadcn/ui** — configured in `components.json` (zinc base color, `@/` aliases, no `tailwind.config.ts` — Tailwind v4 config lives in `globals.css`). When adding a new shadcn component, also add the required CSS variables (`--popover`, `--popover-foreground`, `--input`, `--ring`, etc.) to both `:root` and `.dark` in `app/globals.css`, and map them in the `@theme inline` block. The shadcn CLI may not auto-inject these variables, so verify manually.
